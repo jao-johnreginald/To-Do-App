@@ -24,14 +24,20 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setClickListener()
+        setOnClickListeners()
     }
 
-    private fun setClickListener() {
+    private fun setOnClickListeners() {
+
         binding.floatingActionButton.setOnClickListener {
             // Use nav controllers to navigate to add fragment
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
+
+        binding.listLayout.setOnClickListener {
+            findNavController().navigate(R.id.action_listFragment_to_updateFragment)
+        }
+
     }
 
 }
