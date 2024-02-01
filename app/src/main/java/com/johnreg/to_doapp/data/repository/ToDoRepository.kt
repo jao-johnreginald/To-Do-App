@@ -1,6 +1,8 @@
-package com.johnreg.to_doapp.data
+package com.johnreg.to_doapp.data.repository
 
 import androidx.lifecycle.LiveData
+import com.johnreg.to_doapp.data.ToDoDao
+import com.johnreg.to_doapp.data.models.ToDoData
 
 class ToDoRepository(private val toDoDao: ToDoDao) {
 

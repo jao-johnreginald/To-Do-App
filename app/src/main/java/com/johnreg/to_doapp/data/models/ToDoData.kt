@@ -1,4 +1,4 @@
-package com.johnreg.to_doapp.data
+package com.johnreg.to_doapp.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

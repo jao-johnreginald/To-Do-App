@@ -1,6 +1,7 @@
 package com.johnreg.to_doapp.data
 
 import androidx.room.TypeConverter
+import com.johnreg.to_doapp.data.models.Priority
 
 class Converter {
 
