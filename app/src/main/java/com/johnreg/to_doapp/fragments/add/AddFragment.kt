@@ -41,6 +41,7 @@ class AddFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setMenu()
+        setSpinner()
     }
 
     private fun setMenu() {
@@ -79,8 +80,8 @@ class AddFragment : Fragment() {
         }
     }
 
-    private fun makeSnackbar(text: String) {
-        Snackbar.make(binding.root, text, Snackbar.LENGTH_SHORT).show()
-    }
+    private fun makeSnackbar(text: String) = Snackbar.make(binding.root, text, Snackbar.LENGTH_SHORT).show()
+
+    private fun setSpinner() { binding.spinner.onItemSelectedListener = mSharedViewModel.listener }
 
 }
