@@ -15,16 +15,18 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.johnreg.to_doapp.R
-import com.johnreg.to_doapp.data.models.Priority
 import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentAddBinding
+import com.johnreg.to_doapp.fragments.SharedViewModel
 
 class AddFragment : Fragment() {
 
     private lateinit var binding: FragmentAddBinding
 
     private val mToDoViewModel: ToDoViewModel by viewModels()
+
+    private val mSharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,7 +69,7 @@ class AddFragment : Fragment() {
                 val newData = ToDoData(
                     title = binding.etTitle.text.toString(),
                     description = binding.etDescription.text.toString(),
-                    priority = parsePriority(binding.spinner.selectedItem.toString())
+                    priority = mSharedViewModel.parsePriority(binding.spinner.selectedItem.toString())
                 )
                 mToDoViewModel.insertData(newData)
                 makeSnackbar("Successfully added!")
@@ -79,14 +81,6 @@ class AddFragment : Fragment() {
 
     private fun makeSnackbar(text: String) {
         Snackbar.make(binding.root, text, Snackbar.LENGTH_SHORT).show()
-    }
-
-    private fun parsePriority(priority: String): Priority {
-        return when (priority) {
-            "Medium Priority" -> Priority.MEDIUM
-            "Low Priority" -> Priority.LOW
-            else -> Priority.HIGH
-        }
     }
 
 }
