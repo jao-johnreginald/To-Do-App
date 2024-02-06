@@ -10,14 +10,21 @@ import android.view.ViewGroup
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.johnreg.to_doapp.R
+import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentListBinding
 
 class ListFragment : Fragment() {
 
     private lateinit var binding: FragmentListBinding
+
+    private val adapter: ListAdapter by lazy { ListAdapter() }
+
+    private val mToDoViewModel: ToDoViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +40,7 @@ class ListFragment : Fragment() {
 
         setOnClickListeners()
         setMenu()
+        setRecyclerView()
     }
 
     private fun setOnClickListeners() {
@@ -59,6 +67,19 @@ class ListFragment : Fragment() {
                 return false
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun setRecyclerView() {
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
+        /*
+        The observer will monitor this LiveData object returned by getAllData
+        Everytime the database has a change, the observer will get notified, then
+        use that new data to set the adapter data and the RecyclerView will get updated
+         */
+        mToDoViewModel.getAllData.observe(viewLifecycleOwner) { data ->
+            adapter.setData(data)
+        }
     }
 
 }
