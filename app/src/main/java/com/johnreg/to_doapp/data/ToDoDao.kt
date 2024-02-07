@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.johnreg.to_doapp.data.models.ToDoData
 
 @Dao
@@ -22,5 +23,8 @@ interface ToDoDao {
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertData(toDoData: ToDoData)
+
+    @Update
+    suspend fun updateData(toDoData: ToDoData)
 
 }

@@ -12,8 +12,12 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.johnreg.to_doapp.R
+import com.johnreg.to_doapp.data.models.ToDoData
+import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentUpdateBinding
 import com.johnreg.to_doapp.fragments.SharedViewModel
 
@@ -24,6 +28,8 @@ class UpdateFragment : Fragment() {
     private val args: UpdateFragmentArgs by navArgs()
 
     private val mSharedViewModel: SharedViewModel by viewModels()
+
+    private val mToDoViewModel: ToDoViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,10 +55,36 @@ class UpdateFragment : Fragment() {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return false
+                return when (menuItem.itemId) {
+                    R.id.menu_save -> {
+                        updateItem()
+                        true
+                    }
+                    else -> false
+                }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
+
+    private fun updateItem() {
+        when {
+            binding.etTitle.text.isEmpty() -> makeSnackbar("Please add a title.")
+            else -> {
+                val updatedItem = ToDoData(
+                    id = args.currentItem.id,
+                    title = binding.etTitle.text.toString(),
+                    description = binding.etDescription.text.toString(),
+                    priority = mSharedViewModel.parsePriority(binding.spinner.selectedItem.toString())
+                )
+                mToDoViewModel.updateData(updatedItem)
+                makeSnackbar("Successfully updated!")
+                // Navigate back
+                findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+            }
+        }
+    }
+
+    private fun makeSnackbar(text: String) = Snackbar.make(binding.root, text, Snackbar.LENGTH_SHORT).show()
 
     private fun setUI() {
         binding.etTitle.setText(args.currentItem.title)
