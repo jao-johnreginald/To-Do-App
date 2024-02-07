@@ -1,5 +1,6 @@
 package com.johnreg.to_doapp.fragments.update
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -60,6 +61,10 @@ class UpdateFragment : Fragment() {
                         updateItem()
                         true
                     }
+                    R.id.menu_delete -> {
+                        showAlertDialogAndDeleteItem()
+                        true
+                    }
                     else -> false
                 }
             }
@@ -82,6 +87,20 @@ class UpdateFragment : Fragment() {
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
             }
         }
+    }
+
+    private fun showAlertDialogAndDeleteItem() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete '${args.currentItem.title}'?")
+            .setMessage("Are you sure you want to remove '${args.currentItem.title}'?")
+            .setPositiveButton("Yes") { _, _ ->
+                mToDoViewModel.deleteItem(args.currentItem)
+                makeSnackbar("Successfully Removed: ${args.currentItem.title}")
+                findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+            }
+            .setNegativeButton("No", null)
+            .create()
+            .show()
     }
 
     private fun makeSnackbar(text: String) = Snackbar.make(binding.root, text, Snackbar.LENGTH_SHORT).show()
