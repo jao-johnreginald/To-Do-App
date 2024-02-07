@@ -44,16 +44,10 @@ class ListFragment : Fragment() {
     }
 
     private fun setOnClickListeners() {
-
         binding.floatingActionButton.setOnClickListener {
             // Use nav controllers to navigate to add fragment
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
-
-        binding.listLayout.setOnClickListener {
-            findNavController().navigate(R.id.action_listFragment_to_updateFragment)
-        }
-
     }
 
     private fun setMenu() {

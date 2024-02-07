@@ -10,13 +10,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.navArgs
 import com.johnreg.to_doapp.R
+import com.johnreg.to_doapp.data.models.Priority
 import com.johnreg.to_doapp.databinding.FragmentUpdateBinding
+import com.johnreg.to_doapp.fragments.SharedViewModel
 
 class UpdateFragment : Fragment() {
 
     private lateinit var binding: FragmentUpdateBinding
+
+    private val args: UpdateFragmentArgs by navArgs()
+
+    private val mSharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +39,7 @@ class UpdateFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setMenu()
+        setUI()
     }
 
     private fun setMenu() {
@@ -44,6 +53,19 @@ class UpdateFragment : Fragment() {
                 return false
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun setUI() {
+        binding.etTitle.setText(args.currentItem.title)
+        binding.etDescription.setText(args.currentItem.description)
+        binding.spinner.setSelection(parsePriority(args.currentItem.priority))
+        binding.spinner.onItemSelectedListener = mSharedViewModel.listener
+    }
+
+    private fun parsePriority(priority: Priority) = when (priority) {
+        Priority.HIGH -> 0
+        Priority.MEDIUM -> 1
+        Priority.LOW -> 2
     }
 
 }
