@@ -1,5 +1,6 @@
 package com.johnreg.to_doapp.fragments.list
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -14,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.johnreg.to_doapp.R
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentListBinding
@@ -58,9 +60,28 @@ class ListFragment : Fragment() {
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return false
+                return when (menuItem.itemId) {
+                    R.id.menu_delete_all -> {
+                        showAlertDialogAndDeleteAll()
+                        true
+                    }
+                    else -> false
+                }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun showAlertDialogAndDeleteAll() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete everything?")
+            .setMessage("Are you sure you want to remove everything?")
+            .setPositiveButton("Yes") { _, _ ->
+                mToDoViewModel.deleteAll()
+                Snackbar.make(binding.root, "Successfully Removed Everything!", Snackbar.LENGTH_LONG).show()
+            }
+            .setNegativeButton("No", null)
+            .create()
+            .show()
     }
 
     private fun setRecyclerView() {
