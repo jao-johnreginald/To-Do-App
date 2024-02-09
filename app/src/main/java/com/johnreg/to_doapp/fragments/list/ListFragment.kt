@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.johnreg.to_doapp.R
+import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentListBinding
 import com.johnreg.to_doapp.fragments.SharedViewModel
@@ -110,15 +111,27 @@ class ListFragment : Fragment() {
 
     private fun swipeToDelete() {
         val swipeToDeleteCallback = object : SwipeToDelete() {
-            // Store the item being swiped inside itemToDelete and delete that item
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val itemToDelete = adapter.dataList[viewHolder.adapterPosition]
-                mToDoViewModel.deleteItem(itemToDelete)
-                Snackbar.make(binding.root, "Successfully Removed: ${itemToDelete.title}", Snackbar.LENGTH_SHORT).show()
+                // Store the item being swiped inside deletedItem and delete that item
+                val deletedItem = adapter.dataList[viewHolder.adapterPosition]
+                val position = viewHolder.adapterPosition
+                mToDoViewModel.deleteItem(deletedItem)
+                adapter.notifyItemRemoved(position)
+                // Restore deleted item
+                restoreDeletedData(deletedItem, position)
             }
         }
         val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
         itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+    }
+
+    private fun restoreDeletedData(deletedItem: ToDoData, position: Int) {
+        val snackbar = Snackbar.make(binding.root, "Deleted '${deletedItem.title}'", Snackbar.LENGTH_LONG)
+        snackbar.setAction("Undo") {
+            mToDoViewModel.insertData(deletedItem)
+            adapter.notifyItemChanged(position)
+        }
+        snackbar.show()
     }
 
     private fun showViewsWhenDatabaseIsEmpty() {
