@@ -1,4 +1,4 @@
-package com.johnreg.to_doapp.fragments.list
+package com.johnreg.to_doapp.fragments.list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,6 +9,7 @@ import com.johnreg.to_doapp.R
 import com.johnreg.to_doapp.data.models.Priority
 import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.databinding.RowLayoutBinding
+import com.johnreg.to_doapp.fragments.list.ListFragmentDirections
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 

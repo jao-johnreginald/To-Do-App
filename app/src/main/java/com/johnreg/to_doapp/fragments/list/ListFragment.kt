@@ -14,12 +14,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.johnreg.to_doapp.R
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentListBinding
 import com.johnreg.to_doapp.fragments.SharedViewModel
+import com.johnreg.to_doapp.fragments.list.adapter.ListAdapter
 
 class ListFragment : Fragment() {
 
@@ -43,17 +46,15 @@ class ListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setOnClickListeners()
+        setFabListener()
         setMenu()
         setRecyclerView()
         showViewsWhenDatabaseIsEmpty()
     }
 
-    private fun setOnClickListeners() {
-        binding.floatingActionButton.setOnClickListener {
-            // Use nav controllers to navigate to add fragment
-            findNavController().navigate(R.id.action_listFragment_to_addFragment)
-        }
+    private fun setFabListener() = binding.floatingActionButton.setOnClickListener {
+        // Use nav controllers to navigate to add fragment
+        findNavController().navigate(R.id.action_listFragment_to_addFragment)
     }
 
     private fun setMenu() {
@@ -103,6 +104,21 @@ class ListFragment : Fragment() {
             mSharedViewModel.checkIfDatabaseEmpty(data)
             adapter.setData(data)
         }
+        // Swipe to Delete
+        swipeToDelete()
+    }
+
+    private fun swipeToDelete() {
+        val swipeToDeleteCallback = object : SwipeToDelete() {
+            // Store the item being swiped inside itemToDelete and delete that item
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val itemToDelete = adapter.dataList[viewHolder.adapterPosition]
+                mToDoViewModel.deleteItem(itemToDelete)
+                Snackbar.make(binding.root, "Successfully Removed: ${itemToDelete.title}", Snackbar.LENGTH_SHORT).show()
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
     }
 
     private fun showViewsWhenDatabaseIsEmpty() {
