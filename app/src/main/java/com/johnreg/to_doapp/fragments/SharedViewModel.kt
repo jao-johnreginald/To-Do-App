@@ -26,7 +26,8 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
         override fun onNothingSelected(parent: AdapterView<*>?) {}
     }
 
-    val emptyDatabase: MutableLiveData<Boolean> = MutableLiveData(true)
+    // Creates a MutableLiveData initialized with the given value
+    val emptyDatabase: MutableLiveData<Boolean> = MutableLiveData(false)
 
     fun checkIfDatabaseEmpty(list: List<ToDoData>) {
         emptyDatabase.value = list.isEmpty()
