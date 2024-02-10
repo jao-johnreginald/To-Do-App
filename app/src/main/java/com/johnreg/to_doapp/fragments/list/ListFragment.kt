@@ -24,6 +24,7 @@ import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentListBinding
 import com.johnreg.to_doapp.fragments.SharedViewModel
 import com.johnreg.to_doapp.fragments.list.adapter.ListAdapter
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 class ListFragment : Fragment() {
 
@@ -93,6 +94,10 @@ class ListFragment : Fragment() {
     private fun setRecyclerView() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
+        // Animate the RecyclerView, you need notifyItemRemoved and notifyItemChanged for it to work
+        binding.recyclerView.itemAnimator = SlideInUpAnimator().apply {
+            addDuration = 200
+        }
         /*
         The observer will monitor this LiveData object returned by getAllData
         Everytime the database has a change, the observer will get notified, then
