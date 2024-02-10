@@ -34,4 +34,8 @@ interface ToDoDao {
     @Query("DELETE FROM todo_table")
     suspend fun deleteAll()
 
+    // The LIKE operator is used in a WHERE clause to search for a specified pattern in a column
+    @Query("SELECT * FROM todo_table WHERE title LIKE :searchQuery")
+    fun searchDatabase(searchQuery: String): LiveData<List<ToDoData>>
+
 }

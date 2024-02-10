@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -63,7 +64,10 @@ class ListFragment : Fragment() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Inflate the menu
                 menuInflater.inflate(R.menu.list_fragment_menu, menu)
+                // Set the SearchView and Listener
+                setSearchViewListener(menu)
             }
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
@@ -76,6 +80,38 @@ class ListFragment : Fragment() {
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun setSearchViewListener(menu: Menu) {
+        val searchView = menu.findItem(R.id.menu_search).actionView as? SearchView
+        searchView?.isSubmitButtonEnabled = true
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    searchThroughDatabase(query)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                if (query != null) {
+                    searchThroughDatabase(query)
+                }
+                return true
+            }
+        })
+    }
+
+    private fun searchThroughDatabase(query: String) {
+        // Finds any values that have "query" in any position whether start, end, first, second, etc.
+        val searchQuery = "%$query%"
+        // Inside the searchDatabase Query pass this searchQuery and observe this LiveData
+        // Whenever the data changes or we type something, the observer and adapter will be notified
+        mToDoViewModel.searchDatabase(searchQuery).observe(this) { data ->
+            data?.let {
+                adapter.setData(it)
+            }
+        }
     }
 
     private fun showAlertDialogAndDeleteAll() {
