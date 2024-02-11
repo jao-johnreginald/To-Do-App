@@ -16,8 +16,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.johnreg.to_doapp.R
 import com.johnreg.to_doapp.data.models.ToDoData
@@ -141,7 +141,7 @@ class ListFragment : Fragment() {
 
     private fun setRecyclerView() {
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireActivity())
+        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         // Animate the RecyclerView, you need notifyItemRemoved and notifyItemChanged for it to work
         binding.recyclerView.itemAnimator = SlideInUpAnimator().apply {
             addDuration = 200
