@@ -25,6 +25,7 @@ import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentListBinding
 import com.johnreg.to_doapp.fragments.SharedViewModel
 import com.johnreg.to_doapp.fragments.list.adapter.ListAdapter
+import com.johnreg.to_doapp.utils.observeOnceOnly
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 class ListFragment : Fragment() {
@@ -119,7 +120,7 @@ class ListFragment : Fragment() {
         val searchQuery = "%$query%"
         // Inside the searchDatabase Query pass this searchQuery and observe this LiveData
         // Whenever the data changes or we type something, the observer and adapter will be notified
-        mToDoViewModel.searchDatabase(searchQuery).observe(this) { data ->
+        mToDoViewModel.searchDatabase(searchQuery).observeOnceOnly(viewLifecycleOwner) { data ->
             data?.let {
                 adapter.setData(it)
             }
