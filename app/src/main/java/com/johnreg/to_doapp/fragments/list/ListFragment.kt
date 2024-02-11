@@ -76,6 +76,18 @@ class ListFragment : Fragment() {
                         showAlertDialogAndDeleteAll()
                         true
                     }
+                    R.id.menu_priority_high -> {
+                        mToDoViewModel.sortByHighPriority.observe(viewLifecycleOwner) {
+                            adapter.setData(it)
+                        }
+                        true
+                    }
+                    R.id.menu_priority_low -> {
+                        mToDoViewModel.sortByLowPriority.observe(viewLifecycleOwner) {
+                            adapter.setData(it)
+                        }
+                        true
+                    }
                     else -> false
                 }
             }
