@@ -164,7 +164,15 @@ class ListFragment : Fragment() {
     }
 
     private fun swipeToDelete() {
-        val swipeToDeleteCallback = object : SwipeToDelete() {
+        // 0 because we're not going to drag, only swipe. LEFT because we're going to swipe left
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            // Return false because we're not going to move our items
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean = false
+            // Swipe to delete
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 // Store the item being swiped inside deletedItem and delete that item
                 val deletedItem = adapter.dataList[viewHolder.adapterPosition]
@@ -174,9 +182,7 @@ class ListFragment : Fragment() {
                 // Restore deleted item
                 restoreDeletedData(deletedItem, position)
             }
-        }
-        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
-        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+        }).attachToRecyclerView(binding.recyclerView)
     }
 
     private fun restoreDeletedData(deletedItem: ToDoData, position: Int) {
