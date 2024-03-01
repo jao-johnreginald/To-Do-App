@@ -13,7 +13,6 @@ android {
     defaultConfig {
         applicationId = "com.johnreg.to_doapp"
         minSdk = 26
-        //noinspection EditedTargetSdkVersion
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -30,11 +29,11 @@ android {
             )
         }
     }
+
     buildFeatures {
-        //noinspection DataBindingWithoutKapt
-        dataBinding = true
         viewBinding = true
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -55,29 +54,21 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     // Navigation component
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
+    val navVersion = "2.7.7"
+    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
+    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
-    // ROOM components
-    implementation("androidx.room:room-runtime:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
-    androidTestImplementation("androidx.room:room-testing:2.6.1")
+    // ROOM components | KSP | Coroutines
+    val roomVersion = "2.6.1"
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    ksp("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
 
-    // Lifecycle components
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-common-java8:2.7.0")
-
-    // ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-
-    // Kotlin coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
-
-    // DataBinding
-    ksp("com.android.databinding:compiler:3.1.4")
-    ksp("androidx.databinding:databinding-common:8.2.2")
+    // Convert Flow to LiveData with .asLiveData()
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
 
     // RecyclerView Animator
     implementation("jp.wasabeef:recyclerview-animators:4.0.2")
+
 }
