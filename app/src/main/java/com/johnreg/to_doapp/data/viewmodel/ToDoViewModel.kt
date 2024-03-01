@@ -26,29 +26,21 @@ class ToDoViewModel(application: Application) : AndroidViewModel(application) {
         return repository.getSearchedItems(searchQuery)
     }
 
-    fun createItem(toDoData: ToDoData) {
-        // run insertData() from a background thread
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.createItem(toDoData)
-        }
+    // Run function from a background thread, Dispatchers.IO is generally used for database operations
+    fun createItem(toDoData: ToDoData) = viewModelScope.launch(Dispatchers.IO) {
+        repository.createItem(toDoData)
     }
 
-    fun updateItem(toDoData: ToDoData) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.updateItem(toDoData)
-        }
+    fun updateItem(toDoData: ToDoData) = viewModelScope.launch(Dispatchers.IO) {
+        repository.updateItem(toDoData)
     }
 
-    fun deleteItem(toDoData: ToDoData) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteItem(toDoData)
-        }
+    fun deleteItem(toDoData: ToDoData) = viewModelScope.launch(Dispatchers.IO) {
+        repository.deleteItem(toDoData)
     }
 
-    fun deleteAllItems() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllItems()
-        }
+    fun deleteAllItems() = viewModelScope.launch(Dispatchers.IO) {
+        repository.deleteAllItems()
     }
 
 }

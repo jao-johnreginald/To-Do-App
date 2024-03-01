@@ -15,17 +15,11 @@ class ToDoRepository(private val toDoDao: ToDoDao) {
         return toDoDao.getSearchedItems(searchQuery)
     }
 
-    suspend fun createItem(toDoData: ToDoData) {
-        toDoDao.createItem(toDoData)
-    }
+    suspend fun createItem(toDoData: ToDoData) = toDoDao.createItem(toDoData)
 
-    suspend fun updateItem(toDoData: ToDoData) {
-        toDoDao.updateItem(toDoData)
-    }
+    suspend fun updateItem(toDoData: ToDoData) = toDoDao.updateItem(toDoData)
 
-    suspend fun deleteItem(toDoData: ToDoData) {
-        toDoDao.deleteItem(toDoData)
-    }
+    suspend fun deleteItem(toDoData: ToDoData) = toDoDao.deleteItem(toDoData)
 
     suspend fun deleteAllItems() = toDoDao.deleteAllItems()
 
