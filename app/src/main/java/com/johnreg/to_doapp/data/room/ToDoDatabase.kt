@@ -1,4 +1,4 @@
-package com.johnreg.to_doapp.data
+package com.johnreg.to_doapp.data.room
 
 import android.content.Context
 import androidx.room.Database

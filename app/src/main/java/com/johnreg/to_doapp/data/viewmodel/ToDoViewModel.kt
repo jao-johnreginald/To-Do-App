@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.johnreg.to_doapp.data.ToDoDatabase
+import com.johnreg.to_doapp.data.room.ToDoDatabase
 import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.repository.ToDoRepository
 import kotlinx.coroutines.Dispatchers

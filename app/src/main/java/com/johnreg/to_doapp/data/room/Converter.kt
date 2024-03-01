@@ -1,4 +1,4 @@
-package com.johnreg.to_doapp.data
+package com.johnreg.to_doapp.data.room
 
 import androidx.room.TypeConverter
 import com.johnreg.to_doapp.data.models.Priority
