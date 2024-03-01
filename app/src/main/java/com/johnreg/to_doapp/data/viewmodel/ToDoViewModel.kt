@@ -13,8 +13,8 @@ import kotlinx.coroutines.launch
 
 class ToDoViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val toDoDao: ToDoDao = ToDoDatabase.getDatabase(application).toDoDao()
-
+    private val database: ToDoDatabase = ToDoDatabase.getDatabase(application)
+    private val toDoDao: ToDoDao = database.getToDoDao()
     private val repository: ToDoRepository = ToDoRepository(toDoDao)
 
     val getAllItems: LiveData<List<ToDoData>> = repository.getAllItems

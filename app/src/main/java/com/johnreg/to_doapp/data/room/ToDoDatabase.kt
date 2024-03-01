@@ -15,7 +15,7 @@ abstract class ToDoDatabase: RoomDatabase() {
     The method has no body or argument because Room database is going to be handling it
     The database exposes DAOs through an abstract getter method for each DAO operation
      */
-    abstract fun toDoDao(): ToDoDao
+    abstract fun getToDoDao(): ToDoDao
 
     // Singleton
     companion object {
