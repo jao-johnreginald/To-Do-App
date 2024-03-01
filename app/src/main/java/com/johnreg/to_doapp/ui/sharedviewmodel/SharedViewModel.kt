@@ -1,4 +1,4 @@
-package com.johnreg.to_doapp.ui.fragments
+package com.johnreg.to_doapp.ui.sharedviewmodel
 
 import android.app.Application
 import android.text.TextUtils

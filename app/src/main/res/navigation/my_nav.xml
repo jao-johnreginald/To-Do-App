@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.johnreg.to_doapp.ui.fragments.list.ListFragment"
+        android:name="com.johnreg.to_doapp.ui.fragments.ListFragment"
         android:label="Task List"
         tools:layout="@layout/fragment_list" >
         <action
@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/addFragment"
-        android:name="com.johnreg.to_doapp.ui.fragments.add.AddFragment"
+        android:name="com.johnreg.to_doapp.ui.fragments.AddFragment"
         android:label="Add Task"
         tools:layout="@layout/fragment_add" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/updateFragment"
-        android:name="com.johnreg.to_doapp.ui.fragments.update.UpdateFragment"
+        android:name="com.johnreg.to_doapp.ui.fragments.UpdateFragment"
         android:label="Update Task"
         tools:layout="@layout/fragment_update" >
         <action

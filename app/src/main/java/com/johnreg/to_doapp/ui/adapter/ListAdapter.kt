@@ -10,7 +10,7 @@ import com.johnreg.to_doapp.R
 import com.johnreg.to_doapp.data.models.Priority
 import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.databinding.RowLayoutBinding
-import com.johnreg.to_doapp.ui.fragments.list.ListFragmentDirections
+import com.johnreg.to_doapp.ui.fragments.ListFragmentDirections
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
