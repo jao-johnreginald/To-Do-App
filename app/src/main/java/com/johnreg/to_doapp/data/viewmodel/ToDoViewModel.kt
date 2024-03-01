@@ -3,6 +3,7 @@ package com.johnreg.to_doapp.data.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.johnreg.to_doapp.data.room.ToDoDatabase
 import com.johnreg.to_doapp.data.models.ToDoData
@@ -17,13 +18,14 @@ class ToDoViewModel(application: Application) : AndroidViewModel(application) {
     private val toDoDao: ToDoDao = database.getToDoDao()
     private val repository: ToDoRepository = ToDoRepository(toDoDao)
 
-    val getAllItems: LiveData<List<ToDoData>> = repository.getAllItems
+    // LiveData - we will be able to observe data changes of this LiveData object from the Fragment
+    val getAllItems: LiveData<List<ToDoData>> = repository.getAllItems.asLiveData()
 
-    val sortByHighPriority: LiveData<List<ToDoData>> = repository.sortByHighPriority
-    val sortByLowPriority: LiveData<List<ToDoData>> = repository.sortByLowPriority
+    val sortByHighPriority: LiveData<List<ToDoData>> = repository.sortByHighPriority.asLiveData()
+    val sortByLowPriority: LiveData<List<ToDoData>> = repository.sortByLowPriority.asLiveData()
 
     fun getSearchedItems(searchQuery: String): LiveData<List<ToDoData>> {
-        return repository.getSearchedItems(searchQuery)
+        return repository.getSearchedItems(searchQuery).asLiveData()
     }
 
     // Run function from a background thread, Dispatchers.IO is generally used for database operations

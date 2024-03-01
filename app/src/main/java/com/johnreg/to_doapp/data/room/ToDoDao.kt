@@ -1,6 +1,5 @@
 package com.johnreg.to_doapp.data.room
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -8,13 +7,17 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.johnreg.to_doapp.data.models.ToDoData
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ToDoDao {
 
-    // LiveData - we will be able to observe data changes of this LiveData object from the Fragment
+    /*
+    Convert Flow from coroutines into LiveData in ViewModel
+    No need to use suspend because Room already does this without using the main thread
+     */
     @Query("SELECT * FROM todo_table ORDER BY id ASC")
-    fun getAllItems(): LiveData<List<ToDoData>>
+    fun getAllItems(): Flow<List<ToDoData>>
 
     /*
     OnConflictStrategy - when a new item that we already have comes into our database,
@@ -36,22 +39,24 @@ interface ToDoDao {
 
     // The LIKE operator is used in a WHERE clause to search for a specified pattern in a column
     @Query("SELECT * FROM todo_table WHERE title LIKE :searchQuery")
-    fun getSearchedItems(searchQuery: String): LiveData<List<ToDoData>>
+    fun getSearchedItems(searchQuery: String): Flow<List<ToDoData>>
 
-    // H% - search for the priorities that start with H, meaning HIGH
-    // 1 - return the high priority results first
+    /*
+    H% - search for the priorities that start with H, meaning HIGH
+    1 - return the high priority results first
+     */
     @Query("SELECT * FROM todo_table ORDER BY CASE" +
             " WHEN priority LIKE 'H%' THEN 1" +
             " WHEN priority LIKE 'M%' THEN 2" +
             " WHEN priority LIKE 'L%' THEN 3" +
             " END")
-    fun sortByHighPriority(): LiveData<List<ToDoData>>
+    fun sortByHighPriority(): Flow<List<ToDoData>>
 
     @Query("SELECT * FROM todo_table ORDER BY CASE" +
             " WHEN priority LIKE 'L%' THEN 1" +
             " WHEN priority LIKE 'M%' THEN 2" +
             " WHEN priority LIKE 'H%' THEN 3" +
             " END")
-    fun sortByLowPriority(): LiveData<List<ToDoData>>
+    fun sortByLowPriority(): Flow<List<ToDoData>>
 
 }
