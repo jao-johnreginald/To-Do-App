@@ -8,9 +8,8 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "todo_table")
 @Parcelize
 data class ToDoData(
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
-    var title: String,
-    var priority: Priority = Priority.HIGH,
-    var description: String? = null
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val title: String,
+    val priority: Priority = Priority.HIGH,
+    val description: String? = null
 ) : Parcelable
