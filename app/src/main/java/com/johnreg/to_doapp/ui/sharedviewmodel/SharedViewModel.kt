@@ -1,7 +1,6 @@
 package com.johnreg.to_doapp.ui.sharedviewmodel
 
 import android.app.Application
-import android.text.TextUtils
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -15,7 +14,7 @@ import com.johnreg.to_doapp.data.models.ToDoData
 
 class SharedViewModel(application: Application): AndroidViewModel(application) {
 
-    val listener: OnItemSelectedListener = object : OnItemSelectedListener {
+    val spinnerListener: OnItemSelectedListener = object : OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             when (position) {
                 0 -> (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.red))
@@ -27,28 +26,19 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     }
 
     // Creates a MutableLiveData initialized with the given value
-    val emptyDatabase: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isDatabaseEmpty: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    fun checkIfDatabaseEmpty(list: List<ToDoData>) {
-        emptyDatabase.value = list.isEmpty()
+    fun setMutableLiveData(dataList: List<ToDoData>) {
+        isDatabaseEmpty.value = dataList.isEmpty()
     }
 
-    fun verifyDataFromUser(title: String, description: String): Boolean {
-        return when {
-            TextUtils.isEmpty(title) || TextUtils.isEmpty(description) -> false
-            else -> !(title.isEmpty() || description.isEmpty())
-        }
+    fun parseStringToPriority(string: String): Priority = when (string) {
+        "Medium Priority" -> Priority.MEDIUM
+        "Low Priority" -> Priority.LOW
+        else -> Priority.HIGH
     }
 
-    fun parsePriority(priority: String): Priority {
-        return when (priority) {
-            "Medium Priority" -> Priority.MEDIUM
-            "Low Priority" -> Priority.LOW
-            else -> Priority.HIGH
-        }
-    }
-
-    fun parsePriorityToInt(priority: Priority) = when (priority) {
+    fun parsePriorityToInt(priority: Priority): Int = when (priority) {
         Priority.HIGH -> 0
         Priority.MEDIUM -> 1
         Priority.LOW -> 2

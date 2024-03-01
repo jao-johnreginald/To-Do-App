@@ -156,7 +156,7 @@ class ListFragment : Fragment() {
         then the MutableLiveData value will be set to the data passed in
          */
         mToDoViewModel.getAllItems.observe(viewLifecycleOwner) { data ->
-            mSharedViewModel.checkIfDatabaseEmpty(data)
+            mSharedViewModel.setMutableLiveData(data)
             adapter.setData(data)
         }
         // Swipe to Delete
@@ -197,7 +197,7 @@ class ListFragment : Fragment() {
     private fun showViewsWhenDatabaseIsEmpty() {
         // Observe this MutableLiveData object and whenever its value changes run an if check
         // If the it boolean is true then show the Views, if false then hide the Views
-        mSharedViewModel.emptyDatabase.observe(viewLifecycleOwner) {
+        mSharedViewModel.isDatabaseEmpty.observe(viewLifecycleOwner) {
             if (it) {
                 binding.imageViewNoData.visibility = View.VISIBLE
                 binding.textViewNoData.visibility = View.VISIBLE

@@ -70,7 +70,7 @@ class AddFragment : Fragment() {
                 val newData = ToDoData(
                     title = binding.etTitle.text.toString(),
                     description = binding.etDescription.text.toString(),
-                    priority = mSharedViewModel.parsePriority(binding.spinner.selectedItem.toString())
+                    priority = mSharedViewModel.parseStringToPriority(binding.spinner.selectedItem.toString())
                 )
                 mToDoViewModel.createItem(newData)
                 makeSnackbar("Successfully added!")
@@ -82,6 +82,6 @@ class AddFragment : Fragment() {
 
     private fun makeSnackbar(text: String) = Snackbar.make(binding.root, text, Snackbar.LENGTH_SHORT).show()
 
-    private fun setSpinner() { binding.spinner.onItemSelectedListener = mSharedViewModel.listener }
+    private fun setSpinner() { binding.spinner.onItemSelectedListener = mSharedViewModel.spinnerListener }
 
 }

@@ -79,7 +79,7 @@ class UpdateFragment : Fragment() {
                     id = args.currentItem.id,
                     title = binding.etTitle.text.toString(),
                     description = binding.etDescription.text.toString(),
-                    priority = mSharedViewModel.parsePriority(binding.spinner.selectedItem.toString())
+                    priority = mSharedViewModel.parseStringToPriority(binding.spinner.selectedItem.toString())
                 )
                 mToDoViewModel.updateItem(updatedItem)
                 makeSnackbar("Successfully updated!")
@@ -109,7 +109,7 @@ class UpdateFragment : Fragment() {
         binding.etTitle.setText(args.currentItem.title)
         binding.etDescription.setText(args.currentItem.description)
         binding.spinner.setSelection(mSharedViewModel.parsePriorityToInt(args.currentItem.priority))
-        binding.spinner.onItemSelectedListener = mSharedViewModel.listener
+        binding.spinner.onItemSelectedListener = mSharedViewModel.spinnerListener
     }
 
 }
