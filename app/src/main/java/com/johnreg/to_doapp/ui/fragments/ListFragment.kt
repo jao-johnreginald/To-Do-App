@@ -175,8 +175,8 @@ class ListFragment : Fragment() {
             // Swipe to delete
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 // Store the item being swiped inside deletedItem and delete that item
-                val deletedItem = adapter.dataList[viewHolder.adapterPosition]
                 val position = viewHolder.adapterPosition
+                val deletedItem = adapter.getCurrentItem(position)
                 mToDoViewModel.deleteItem(deletedItem)
                 adapter.notifyItemRemoved(position)
                 // Restore deleted item
