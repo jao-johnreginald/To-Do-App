@@ -1,4 +1,4 @@
-package com.johnreg.to_doapp.fragments
+package com.johnreg.to_doapp.ui.fragments
 
 import android.app.Application
 import android.text.TextUtils

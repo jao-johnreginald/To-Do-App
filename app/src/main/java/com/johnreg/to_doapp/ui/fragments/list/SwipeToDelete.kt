@@ -1,4 +1,4 @@
-package com.johnreg.to_doapp.fragments.list
+package com.johnreg.to_doapp.ui.fragments.list
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView

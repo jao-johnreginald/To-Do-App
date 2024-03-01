@@ -1,4 +1,4 @@
-package com.johnreg.to_doapp.fragments.add
+package com.johnreg.to_doapp.ui.fragments.add
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +18,7 @@ import com.johnreg.to_doapp.R
 import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentAddBinding
-import com.johnreg.to_doapp.fragments.SharedViewModel
+import com.johnreg.to_doapp.ui.fragments.SharedViewModel
 
 class AddFragment : Fragment() {
 
