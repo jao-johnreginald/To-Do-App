@@ -23,6 +23,7 @@ interface ToDoDao {
     OnConflictStrategy - when a new item that we already have comes into our database,
     we can specify a strategy on what should our Room database do
 
+    By default, all queries must be executed on a separate thread
     suspend - tell the compiler that our function will be running inside a coroutine
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)

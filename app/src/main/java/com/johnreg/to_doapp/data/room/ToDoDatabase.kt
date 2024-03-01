@@ -9,7 +9,7 @@ import com.johnreg.to_doapp.data.models.ToDoData
 
 @Database(entities = [ToDoData::class], version = 2, exportSchema = false)
 @TypeConverters(Converter::class)
-abstract class ToDoDatabase: RoomDatabase() {
+abstract class ToDoDatabase : RoomDatabase() {
 
     /*
     The method has no body or argument because Room database is going to be handling it
