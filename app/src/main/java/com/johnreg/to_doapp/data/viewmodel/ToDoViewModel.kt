@@ -24,7 +24,7 @@ class ToDoViewModel(application: Application): AndroidViewModel(application) {
     // init is called whenever ToDoViewModel is initialized first
     init {
         repository = ToDoRepository(toDoDao)
-        getAllData = repository.getAllData
+        getAllData = repository.getAllItems
         sortByHighPriority = repository.sortByHighPriority
         sortByLowPriority = repository.sortByLowPriority
     }
@@ -32,13 +32,13 @@ class ToDoViewModel(application: Application): AndroidViewModel(application) {
     fun insertData(toDoData: ToDoData) {
         // run insertData() from a background thread
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertData(toDoData)
+            repository.createItem(toDoData)
         }
     }
 
     fun updateData(toDoData: ToDoData) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateData(toDoData)
+            repository.updateItem(toDoData)
         }
     }
 
@@ -50,12 +50,12 @@ class ToDoViewModel(application: Application): AndroidViewModel(application) {
 
     fun deleteAll() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAll()
+            repository.deleteAllItems()
         }
     }
 
     fun searchDatabase(searchQuery: String): LiveData<List<ToDoData>> {
-        return repository.searchDatabase(searchQuery)
+        return repository.getSearchedItems(searchQuery)
     }
 
 }
