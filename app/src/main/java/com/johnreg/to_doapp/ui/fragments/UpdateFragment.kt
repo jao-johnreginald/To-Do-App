@@ -81,7 +81,7 @@ class UpdateFragment : Fragment() {
                     description = binding.etDescription.text.toString(),
                     priority = mSharedViewModel.parsePriority(binding.spinner.selectedItem.toString())
                 )
-                mToDoViewModel.updateData(updatedItem)
+                mToDoViewModel.updateItem(updatedItem)
                 makeSnackbar("Successfully updated!")
                 // Navigate back
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)

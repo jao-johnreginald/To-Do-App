@@ -72,7 +72,7 @@ class AddFragment : Fragment() {
                     description = binding.etDescription.text.toString(),
                     priority = mSharedViewModel.parsePriority(binding.spinner.selectedItem.toString())
                 )
-                mToDoViewModel.insertData(newData)
+                mToDoViewModel.createItem(newData)
                 makeSnackbar("Successfully added!")
                 // Navigate back
                 findNavController().navigate(R.id.action_addFragment_to_listFragment)

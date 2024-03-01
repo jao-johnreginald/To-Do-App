@@ -120,7 +120,7 @@ class ListFragment : Fragment() {
         val searchQuery = "%$query%"
         // Inside the searchDatabase Query pass this searchQuery and observe this LiveData
         // Whenever the data changes or we type something, the observer and adapter will be notified
-        mToDoViewModel.searchDatabase(searchQuery).observeOnceOnly(viewLifecycleOwner) { data ->
+        mToDoViewModel.getSearchedItems(searchQuery).observeOnceOnly(viewLifecycleOwner) { data ->
             data?.let {
                 adapter.setData(it)
             }
@@ -132,7 +132,7 @@ class ListFragment : Fragment() {
             .setTitle("Delete everything?")
             .setMessage("Are you sure you want to remove everything?")
             .setPositiveButton("Yes") { _, _ ->
-                mToDoViewModel.deleteAll()
+                mToDoViewModel.deleteAllItems()
                 Snackbar.make(binding.root, "Successfully Removed Everything!", Snackbar.LENGTH_LONG).show()
             }
             .setNegativeButton("No", null)
@@ -155,7 +155,7 @@ class ListFragment : Fragment() {
         Also the checkIfDatabaseEmpty function will run in SharedViewModel with the data passed in,
         then the MutableLiveData value will be set to the data passed in
          */
-        mToDoViewModel.getAllData.observe(viewLifecycleOwner) { data ->
+        mToDoViewModel.getAllItems.observe(viewLifecycleOwner) { data ->
             mSharedViewModel.checkIfDatabaseEmpty(data)
             adapter.setData(data)
         }
@@ -188,7 +188,7 @@ class ListFragment : Fragment() {
     private fun restoreDeletedData(deletedItem: ToDoData, position: Int) {
         val snackbar = Snackbar.make(binding.root, "Deleted '${deletedItem.title}'", Snackbar.LENGTH_LONG)
         snackbar.setAction("Undo") {
-            mToDoViewModel.insertData(deletedItem)
+            mToDoViewModel.createItem(deletedItem)
             adapter.notifyItemChanged(position)
         }
         snackbar.show()

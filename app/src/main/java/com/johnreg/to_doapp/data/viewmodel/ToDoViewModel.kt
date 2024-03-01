@@ -7,36 +7,33 @@ import androidx.lifecycle.viewModelScope
 import com.johnreg.to_doapp.data.room.ToDoDatabase
 import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.repository.ToDoRepository
+import com.johnreg.to_doapp.data.room.ToDoDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ToDoViewModel(application: Application): AndroidViewModel(application) {
+class ToDoViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val toDoDao = ToDoDatabase.getDatabase(application).toDoDao()
+    private val toDoDao: ToDoDao = ToDoDatabase.getDatabase(application).toDoDao()
 
-    private val repository: ToDoRepository
+    private val repository: ToDoRepository = ToDoRepository(toDoDao)
 
-    val getAllData: LiveData<List<ToDoData>>
+    val getAllItems: LiveData<List<ToDoData>> = repository.getAllItems
 
-    val sortByHighPriority: LiveData<List<ToDoData>>
-    val sortByLowPriority: LiveData<List<ToDoData>>
+    val sortByHighPriority: LiveData<List<ToDoData>> = repository.sortByHighPriority
+    val sortByLowPriority: LiveData<List<ToDoData>> = repository.sortByLowPriority
 
-    // init is called whenever ToDoViewModel is initialized first
-    init {
-        repository = ToDoRepository(toDoDao)
-        getAllData = repository.getAllItems
-        sortByHighPriority = repository.sortByHighPriority
-        sortByLowPriority = repository.sortByLowPriority
+    fun getSearchedItems(searchQuery: String): LiveData<List<ToDoData>> {
+        return repository.getSearchedItems(searchQuery)
     }
 
-    fun insertData(toDoData: ToDoData) {
+    fun createItem(toDoData: ToDoData) {
         // run insertData() from a background thread
         viewModelScope.launch(Dispatchers.IO) {
             repository.createItem(toDoData)
         }
     }
 
-    fun updateData(toDoData: ToDoData) {
+    fun updateItem(toDoData: ToDoData) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateItem(toDoData)
         }
@@ -48,14 +45,10 @@ class ToDoViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    fun deleteAll() {
+    fun deleteAllItems() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllItems()
         }
-    }
-
-    fun searchDatabase(searchQuery: String): LiveData<List<ToDoData>> {
-        return repository.getSearchedItems(searchQuery)
     }
 
 }
