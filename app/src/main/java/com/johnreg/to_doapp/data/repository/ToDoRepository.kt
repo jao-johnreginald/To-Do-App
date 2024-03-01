@@ -6,27 +6,27 @@ import com.johnreg.to_doapp.data.models.ToDoData
 
 class ToDoRepository(private val toDoDao: ToDoDao) {
 
-    val getAllData: LiveData<List<ToDoData>> = toDoDao.getAllData()
+    val getAllData: LiveData<List<ToDoData>> = toDoDao.getAllItems()
 
     val sortByHighPriority: LiveData<List<ToDoData>> = toDoDao.sortByHighPriority()
     val sortByLowPriority: LiveData<List<ToDoData>> = toDoDao.sortByLowPriority()
 
     suspend fun insertData(toDoData: ToDoData) {
-        toDoDao.insertData(toDoData)
+        toDoDao.createItem(toDoData)
     }
 
     suspend fun updateData(toDoData: ToDoData) {
-        toDoDao.updateData(toDoData)
+        toDoDao.updateItem(toDoData)
     }
 
     suspend fun deleteItem(toDoData: ToDoData) {
         toDoDao.deleteItem(toDoData)
     }
 
-    suspend fun deleteAll() = toDoDao.deleteAll()
+    suspend fun deleteAll() = toDoDao.deleteAllItems()
 
     fun searchDatabase(searchQuery: String): LiveData<List<ToDoData>> {
-        return toDoDao.searchDatabase(searchQuery)
+        return toDoDao.getSearchedItems(searchQuery)
     }
 
 }

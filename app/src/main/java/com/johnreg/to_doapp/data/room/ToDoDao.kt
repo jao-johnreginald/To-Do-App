@@ -14,7 +14,7 @@ interface ToDoDao {
 
     // LiveData - we will be able to observe data changes of this LiveData object from the Fragment
     @Query("SELECT * FROM todo_table ORDER BY id ASC")
-    fun getAllData(): LiveData<List<ToDoData>>
+    fun getAllItems(): LiveData<List<ToDoData>>
 
     /*
     OnConflictStrategy - when a new item that we already have comes into our database,
@@ -23,20 +23,20 @@ interface ToDoDao {
     suspend - tell the compiler that our function will be running inside a coroutine
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertData(toDoData: ToDoData)
+    suspend fun createItem(toDoData: ToDoData)
 
     @Update
-    suspend fun updateData(toDoData: ToDoData)
+    suspend fun updateItem(toDoData: ToDoData)
 
     @Delete
     suspend fun deleteItem(toDoData: ToDoData)
 
     @Query("DELETE FROM todo_table")
-    suspend fun deleteAll()
+    suspend fun deleteAllItems()
 
     // The LIKE operator is used in a WHERE clause to search for a specified pattern in a column
     @Query("SELECT * FROM todo_table WHERE title LIKE :searchQuery")
-    fun searchDatabase(searchQuery: String): LiveData<List<ToDoData>>
+    fun getSearchedItems(searchQuery: String): LiveData<List<ToDoData>>
 
     // H% - search for the priorities that start with H, meaning HIGH
     // 1 - return the high priority results first
