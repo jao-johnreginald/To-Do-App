@@ -29,7 +29,6 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
     }
 
     class ViewHolder(private val binding: RowLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(currentItem: ToDoData) {
             binding.tvTitle.text = currentItem.title
             binding.tvDescription.text = currentItem.description
@@ -53,16 +52,15 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
                 itemView.findNavController().navigate(action)
             }
         }
-
     }
 
-    fun setData(list: List<ToDoData>) {
-        val toDoDiffUtil = ToDoDiffUtil(dataList, list)
+    fun setData(newDataList: List<ToDoData>) {
+        val toDoDiffUtil = ToDoDiffUtil(dataList, newDataList)
         val toDoDiffResult = DiffUtil.calculateDiff(toDoDiffUtil)
-        this.dataList = list
+        this.dataList = newDataList
         toDoDiffResult.dispatchUpdatesTo(this)
     }
 
-    fun getCurrentItem(position: Int) = dataList[position]
+    fun getCurrentItem(position: Int): ToDoData = dataList[position]
 
 }
