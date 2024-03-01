@@ -6,13 +6,9 @@ import com.johnreg.to_doapp.data.models.Priority
 class Converter {
 
     @TypeConverter
-    fun fromPriority(priority: Priority): String {
-        return priority.name
-    }
+    fun fromPriority(priority: Priority): String = priority.name
 
     @TypeConverter
-    fun toPriority(priority: String): Priority {
-        return Priority.valueOf(priority)
-    }
+    fun toPriority(priority: String): Priority = Priority.valueOf(priority)
 
 }
