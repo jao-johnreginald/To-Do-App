@@ -32,7 +32,7 @@ class ListFragment : Fragment() {
 
     private lateinit var binding: FragmentListBinding
 
-    private val adapter: ListAdapter by lazy { ListAdapter() }
+    private val listAdapter: ListAdapter by lazy { ListAdapter() }
 
     private val mToDoViewModel: ToDoViewModel by viewModels()
 
@@ -53,7 +53,7 @@ class ListFragment : Fragment() {
         setFabListener()
         setMenu()
         setRecyclerView()
-        showViewsWhenDatabaseIsEmpty()
+        showViewsIfDatabaseIsEmpty()
     }
 
     private fun setFabListener() = binding.floatingActionButton.setOnClickListener {
@@ -68,24 +68,28 @@ class ListFragment : Fragment() {
                 // Inflate the menu
                 menuInflater.inflate(R.menu.list_fragment_menu, menu)
                 // Set the SearchView and Listener
-                setSearchViewListener(menu)
+                setSearchViewAndListener(menu)
             }
-
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.menu_delete_all -> {
-                        showAlertDialogAndDeleteAll()
+                        // Show the alert dialog and delete all items
+                        showAlertDialogAndDeleteAllItems()
                         true
                     }
                     R.id.menu_priority_high -> {
-                        mToDoViewModel.sortByHighPriority.observe(viewLifecycleOwner) {
-                            adapter.setData(it)
+                        // Sort by high priority
+                        mToDoViewModel.sortByHighPriority
+                            .observe(viewLifecycleOwner) { sortByHighPriority ->
+                            listAdapter.setData(sortByHighPriority)
                         }
                         true
                     }
                     R.id.menu_priority_low -> {
-                        mToDoViewModel.sortByLowPriority.observe(viewLifecycleOwner) {
-                            adapter.setData(it)
+                        // Sort by low priority
+                        mToDoViewModel.sortByLowPriority
+                            .observe(viewLifecycleOwner) { sortByLowPriority ->
+                            listAdapter.setData(sortByLowPriority)
                         }
                         true
                     }
@@ -95,7 +99,7 @@ class ListFragment : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    private fun setSearchViewListener(menu: Menu) {
+    private fun setSearchViewAndListener(menu: Menu) {
         val searchView = menu.findItem(R.id.menu_search).actionView as? SearchView
         searchView?.isSubmitButtonEnabled = true
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -105,7 +109,6 @@ class ListFragment : Fragment() {
                 }
                 return true
             }
-
             override fun onQueryTextChange(query: String?): Boolean {
                 if (query != null) {
                     searchThroughDatabase(query)
@@ -120,45 +123,62 @@ class ListFragment : Fragment() {
         val searchQuery = "%$query%"
         // Inside the searchDatabase Query pass this searchQuery and observe this LiveData
         // Whenever the data changes or we type something, the observer and adapter will be notified
-        mToDoViewModel.getSearchedItems(searchQuery).observeOnceOnly(viewLifecycleOwner) { data ->
-            data?.let {
-                adapter.setData(it)
-            }
+        mToDoViewModel.getSearchedItems(searchQuery)
+            .observeOnceOnly(viewLifecycleOwner) { getSearchedItems ->
+            listAdapter.setData(getSearchedItems)
         }
     }
 
-    private fun showAlertDialogAndDeleteAll() {
+    private fun showAlertDialogAndDeleteAllItems() {
         AlertDialog.Builder(requireContext())
             .setTitle("Delete everything?")
             .setMessage("Are you sure you want to remove everything?")
             .setPositiveButton("Yes") { _, _ ->
+                // Store the dataList inside deletedItems and delete all items
+                val deletedItems = listAdapter.getAllItems()
                 mToDoViewModel.deleteAllItems()
-                Snackbar.make(binding.root, "Successfully Removed Everything!", Snackbar.LENGTH_LONG).show()
+                // Restore deleted dataList
+                showSnackbarAndRestoreAllItems(deletedItems)
             }
             .setNegativeButton("No", null)
-            .create()
             .show()
     }
 
-    private fun setRecyclerView() {
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        // Animate the RecyclerView, you need notifyItemRemoved and notifyItemChanged for it to work
-        binding.recyclerView.itemAnimator = SlideInUpAnimator().apply {
-            addDuration = 200
+    private fun showSnackbarAndRestoreAllItems(deletedItems: List<ToDoData>) {
+        val snackbar = Snackbar.make(
+            binding.root, "Successfully removed everything.", Snackbar.LENGTH_LONG
+        )
+        snackbar.setAction("Undo") {
+            for (i in 1..deletedItems.size) {
+                mToDoViewModel.createItem(deletedItems[i - 1])
+            }
         }
-        /*
-        The observer will monitor this LiveData object returned by getAllData
-        Everytime the database has a change, the observer will get notified, then
-        use that new data to set the adapter data and the RecyclerView will get updated
+        snackbar.show()
+    }
 
-        Also the checkIfDatabaseEmpty function will run in SharedViewModel with the data passed in,
-        then the MutableLiveData value will be set to the data passed in
-         */
-        mToDoViewModel.getAllItems.observe(viewLifecycleOwner) { data ->
-            mSharedViewModel.setMutableLiveData(data)
-            adapter.setData(data)
+    private fun setRecyclerView() {
+
+        binding.recyclerView.apply {
+            // Adapter
+            adapter = listAdapter
+            // Layout Manager - 2 columns, VERTICAL orientation
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            // Animate the RecyclerView
+            itemAnimator = SlideInUpAnimator()
         }
+
+        /*
+        Observe this LiveData returned by getAllItems, everytime the database has a change,
+        use that new data to set the Adapter data and update the RecyclerView
+
+        Also set the MutableLiveData returned by isDatabaseEmpty in SharedViewModel
+        to whether or not the dataList is empty
+         */
+        mToDoViewModel.getAllItems.observe(viewLifecycleOwner) { newDataList ->
+            mSharedViewModel.setMutableLiveData(newDataList)
+            listAdapter.setData(newDataList)
+        }
+
         // Swipe to Delete
         swipeToDelete()
     }
@@ -175,30 +195,27 @@ class ListFragment : Fragment() {
             // Swipe to delete
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 // Store the item being swiped inside deletedItem and delete that item
-                val position = viewHolder.adapterPosition
-                val deletedItem = adapter.getCurrentItem(position)
+                val deletedItem = listAdapter.getCurrentItem(viewHolder.adapterPosition)
                 mToDoViewModel.deleteItem(deletedItem)
-                adapter.notifyItemRemoved(position)
                 // Restore deleted item
-                restoreDeletedData(deletedItem, position)
+                showSnackbarAndRestoreItem(deletedItem)
             }
         }).attachToRecyclerView(binding.recyclerView)
     }
 
-    private fun restoreDeletedData(deletedItem: ToDoData, position: Int) {
-        val snackbar = Snackbar.make(binding.root, "Deleted '${deletedItem.title}'", Snackbar.LENGTH_LONG)
-        snackbar.setAction("Undo") {
-            mToDoViewModel.createItem(deletedItem)
-            adapter.notifyItemChanged(position)
-        }
+    private fun showSnackbarAndRestoreItem(deletedItem: ToDoData) {
+        val snackbar = Snackbar.make(
+            binding.root, "Deleted '${deletedItem.title}'", Snackbar.LENGTH_LONG
+        )
+        snackbar.setAction("Undo") { mToDoViewModel.createItem(deletedItem) }
         snackbar.show()
     }
 
-    private fun showViewsWhenDatabaseIsEmpty() {
+    private fun showViewsIfDatabaseIsEmpty() {
         // Observe this MutableLiveData object and whenever its value changes run an if check
-        // If the it boolean is true then show the Views, if false then hide the Views
-        mSharedViewModel.isDatabaseEmpty.observe(viewLifecycleOwner) {
-            if (it) {
+        // If the boolean is true then show the Views, if false then hide the Views
+        mSharedViewModel.isDatabaseEmpty.observe(viewLifecycleOwner) { isDatabaseEmpty ->
+            if (isDatabaseEmpty) {
                 binding.imageViewNoData.visibility = View.VISIBLE
                 binding.textViewNoData.visibility = View.VISIBLE
             } else {
