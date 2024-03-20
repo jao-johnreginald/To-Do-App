@@ -71,9 +71,7 @@ abstract class ToDoDatabase : RoomDatabase() {
                 scope.launch {
                     val toDoDao = toDoDatabase.getToDoDao()
                     val toDoList = getToDoList()
-                    for (i in 1..toDoList.size) {
-                        toDoDao.createItem(toDoList[i - 1])
-                    }
+                    for (i in toDoList.indices) toDoDao.createItem(toDoList[i])
                 }
             }
         }

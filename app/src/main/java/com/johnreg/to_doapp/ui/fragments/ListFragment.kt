@@ -149,9 +149,7 @@ class ListFragment : Fragment() {
             binding.root, "Successfully removed everything.", Snackbar.LENGTH_LONG
         )
         snackbar.setAction("Undo") {
-            for (i in 1..deletedItems.size) {
-                mToDoViewModel.createItem(deletedItems[i - 1])
-            }
+            for (i in deletedItems.indices) mToDoViewModel.createItem(deletedItems[i])
         }
         snackbar.show()
     }
