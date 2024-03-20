@@ -53,6 +53,7 @@ class ListFragment : Fragment() {
         setFabListener()
         setMenu()
         setRecyclerView()
+        setSwipeToDelete()
         showViewsIfDatabaseIsEmpty()
     }
 
@@ -101,18 +102,14 @@ class ListFragment : Fragment() {
 
     private fun setSearchViewAndListener(menu: Menu) {
         val searchView = menu.findItem(R.id.menu_search).actionView as? SearchView
-        searchView?.isSubmitButtonEnabled = true
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query != null) {
-                    searchThroughDatabase(query)
-                }
+                if (query != null) searchThroughDatabase(query)
                 return true
             }
             override fun onQueryTextChange(query: String?): Boolean {
-                if (query != null) {
-                    searchThroughDatabase(query)
-                }
+                // If query is not null, search through the database
+                if (query != null) searchThroughDatabase(query)
                 return true
             }
         })
@@ -124,8 +121,8 @@ class ListFragment : Fragment() {
         // Inside the searchDatabase Query pass this searchQuery and observe this LiveData
         // Whenever the data changes or we type something, the observer and adapter will be notified
         mToDoViewModel.getSearchedItems(searchQuery)
-            .observeOnceOnly(viewLifecycleOwner) { getSearchedItems ->
-            listAdapter.setData(getSearchedItems)
+            .observeOnceOnly(viewLifecycleOwner) { searchedItems ->
+            listAdapter.setData(searchedItems)
         }
     }
 
@@ -155,7 +152,6 @@ class ListFragment : Fragment() {
     }
 
     private fun setRecyclerView() {
-
         binding.recyclerView.apply {
             // Adapter
             adapter = listAdapter
@@ -164,7 +160,6 @@ class ListFragment : Fragment() {
             // Animate the RecyclerView
             itemAnimator = SlideInUpAnimator()
         }
-
         /*
         Observe this LiveData returned by getAllItems, everytime the database has a change,
         use that new data to set the Adapter data and update the RecyclerView
@@ -176,12 +171,9 @@ class ListFragment : Fragment() {
             mSharedViewModel.setMutableLiveData(newDataList)
             listAdapter.setData(newDataList)
         }
-
-        // Swipe to Delete
-        swipeToDelete()
     }
 
-    private fun swipeToDelete() {
+    private fun setSwipeToDelete() {
         // 0 because we're not going to drag, only swipe. LEFT because we're going to swipe left
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             // Return false because we're not going to move our items
