@@ -9,12 +9,15 @@ import com.johnreg.to_doapp.data.room.ToDoDatabase
 import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.repository.ToDoRepository
 import com.johnreg.to_doapp.data.room.ToDoDao
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 class ToDoViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val database: ToDoDatabase = ToDoDatabase.getDatabase(application)
+    private val applicationScope: CoroutineScope = CoroutineScope(SupervisorJob())
+    private val database: ToDoDatabase = ToDoDatabase.getDatabase(application, applicationScope)
     private val toDoDao: ToDoDao = database.getToDoDao()
     private val repository: ToDoRepository = ToDoRepository(toDoDao)
 
