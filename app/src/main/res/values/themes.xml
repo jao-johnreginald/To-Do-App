@@ -10,5 +10,29 @@
         <item name="colorPrimarySurface">@color/white</item>
     </style>
 
+    <style name="RowLayoutTextTitle">
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:maxLength">20</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="RowLayoutTextDescription">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:maxLength">300</item>
+        <item name="android:maxLines">10</item>
+    </style>
+
+    <style name="RowLayoutPriorityIndicator">
+        <item name="strokeWidth">0dp</item>
+        <item name="cardCornerRadius">100dp</item>
+    </style>
+
+    <style name="RowLayoutMaterialCard">
+        <item name="strokeColor">?attr/colorPrimaryContainer</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardCornerRadius">16dp</item>
+    </style>
+
     <style name="Theme.ToDoApp" parent="Base.Theme.ToDoApp" />
 </resources>
