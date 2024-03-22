@@ -7,7 +7,7 @@
     tools:context=".ui.fragments.ListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="8dp"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/fab"
         style="@style/FragmentListFAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView_no_data"
+        android:id="@+id/image_no_data"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:contentDescription="@string/no_data_image"
@@ -42,7 +42,7 @@
         app:layout_constraintVertical_bias="0.40" />
 
     <TextView
-        android:id="@+id/textView_no_data"
+        android:id="@+id/tv_no_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -52,5 +52,5 @@
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView_no_data" />
+        app:layout_constraintTop_toBottomOf="@id/image_no_data" />
 </androidx.constraintlayout.widget.ConstraintLayout>

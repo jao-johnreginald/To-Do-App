@@ -58,7 +58,7 @@ class ListFragment : Fragment() {
         showViewsIfDatabaseIsEmpty()
     }
 
-    private fun setFabListener() = binding.floatingActionButton.setOnClickListener {
+    private fun setFabListener() = binding.fab.setOnClickListener {
         // Use nav controllers to navigate to add fragment
         findNavController().navigate(R.id.action_listFragment_to_addFragment)
     }
@@ -208,11 +208,11 @@ class ListFragment : Fragment() {
         // If the boolean is true then show the Views, if false then hide the Views
         mSharedViewModel.isDatabaseEmpty.observe(viewLifecycleOwner) { isDatabaseEmpty ->
             if (isDatabaseEmpty) {
-                binding.imageViewNoData.visibility = View.VISIBLE
-                binding.textViewNoData.visibility = View.VISIBLE
+                binding.imageNoData.visibility = View.VISIBLE
+                binding.tvNoData.visibility = View.VISIBLE
             } else {
-                binding.imageViewNoData.visibility = View.INVISIBLE
-                binding.textViewNoData.visibility = View.INVISIBLE
+                binding.imageNoData.visibility = View.INVISIBLE
+                binding.tvNoData.visibility = View.INVISIBLE
             }
         }
     }
