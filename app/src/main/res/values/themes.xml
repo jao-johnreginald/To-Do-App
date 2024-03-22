@@ -7,7 +7,7 @@
         <item name="colorOnSurface">@color/blue_gray_900</item>
         <item name="colorOnSurfaceVariant">@color/blue_gray_400</item>
         <item name="colorPrimaryContainer">@color/blue_gray_100</item>
-        <item name="colorPrimarySurface">@color/white</item>
+        <item name="colorPrimarySurface">@color/blue_200</item>
     </style>
 
     <style name="RowLayoutTextTitle">
@@ -32,6 +32,10 @@
         <item name="strokeColor">?attr/colorPrimaryContainer</item>
         <item name="strokeWidth">1dp</item>
         <item name="cardCornerRadius">16dp</item>
+    </style>
+
+    <style name="FragmentListFAB">
+        <item name="backgroundTint">?attr/colorPrimarySurface</item>
     </style>
 
     <style name="Theme.ToDoApp" parent="Base.Theme.ToDoApp" />
