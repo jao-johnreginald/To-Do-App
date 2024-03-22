@@ -8,6 +8,9 @@
         <item name="colorOnSurfaceVariant">@color/blue_gray_400</item>
         <item name="colorPrimaryContainer">@color/blue_gray_100</item>
         <item name="colorPrimarySurface">@color/blue_200</item>
+
+        <item name="colorPrimaryVariant">@color/blue_700</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
     </style>
 
     <style name="RowLayoutTextTitle">
