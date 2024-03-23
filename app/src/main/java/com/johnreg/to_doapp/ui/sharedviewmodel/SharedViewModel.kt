@@ -12,7 +12,7 @@ import com.johnreg.to_doapp.R
 import com.johnreg.to_doapp.data.models.Priority
 import com.johnreg.to_doapp.data.models.ToDoData
 
-class SharedViewModel(application: Application): AndroidViewModel(application) {
+class SharedViewModel(application: Application) : AndroidViewModel(application) {
 
     val spinnerListener: OnItemSelectedListener = object : OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
