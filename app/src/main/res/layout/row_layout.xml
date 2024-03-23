@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:cardBackgroundColor="@color/red" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_title"
             style="@style/RowLayoutTextTitle"
             android:layout_width="0dp"
@@ -35,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="My Title" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_description"
             style="@style/RowLayoutTextDescription"
             android:layout_width="0dp"
