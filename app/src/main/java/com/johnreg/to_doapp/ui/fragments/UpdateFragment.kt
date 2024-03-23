@@ -1,6 +1,5 @@
 package com.johnreg.to_doapp.ui.fragments
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -15,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.johnreg.to_doapp.R
 import com.johnreg.to_doapp.data.models.ToDoData
@@ -90,7 +90,7 @@ class UpdateFragment : Fragment() {
     }
 
     private fun showAlertDialogAndDeleteItem() {
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle("Delete '${args.currentItem.title}'?")
             .setMessage("Are you sure you want to remove '${args.currentItem.title}'?")
             .setPositiveButton("Yes") { _, _ ->

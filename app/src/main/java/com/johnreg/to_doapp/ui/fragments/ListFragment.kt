@@ -1,6 +1,5 @@
 package com.johnreg.to_doapp.ui.fragments
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -18,13 +17,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.johnreg.to_doapp.R
 import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentListBinding
-import com.johnreg.to_doapp.ui.sharedviewmodel.SharedViewModel
 import com.johnreg.to_doapp.ui.adapter.ListAdapter
+import com.johnreg.to_doapp.ui.sharedviewmodel.SharedViewModel
 import com.johnreg.to_doapp.utils.hideKeyboardFrom
 import com.johnreg.to_doapp.utils.observeOnceOnly
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
@@ -129,7 +129,7 @@ class ListFragment : Fragment() {
     }
 
     private fun showAlertDialogAndDeleteAllItems() {
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle("Delete everything?")
             .setMessage("Are you sure you want to remove everything?")
             .setPositiveButton("Yes") { _, _ ->
