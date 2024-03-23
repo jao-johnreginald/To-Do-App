@@ -9,37 +9,33 @@
 
     <EditText
         android:id="@+id/et_title"
-        android:layout_width="0dp"
+        android:layout_width="350dp"
         android:layout_height="60dp"
         android:autofillHints="title"
         android:background="@drawable/custom_input"
         android:ems="10"
         android:hint="@string/title"
         android:inputType="text"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
+        android:paddingHorizontal="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="0dp"
+        android:layout_width="350dp"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/custom_input"
         android:entries="@array/priorities"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingHorizontal="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_title" />
+        app:layout_constraintTop_toBottomOf="@id/et_title" />
 
     <EditText
         android:id="@+id/et_description"
-        android:layout_width="0dp"
+        android:layout_width="350dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:autofillHints="description"
@@ -48,12 +44,10 @@
         android:gravity="start|top"
         android:hint="@string/description"
         android:inputType="textMultiLine"
-        android:paddingStart="24dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="24dp"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@id/spinner" />
 </androidx.constraintlayout.widget.ConstraintLayout>
