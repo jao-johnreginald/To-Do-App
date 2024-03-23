@@ -130,8 +130,8 @@ class ListFragment : Fragment() {
 
     private fun showAlertDialogAndDeleteAllItems() {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Delete everything?")
-            .setMessage("Are you sure you want to remove everything?")
+            .setTitle("Delete Everything?")
+            .setMessage("Are you sure you want to delete everything?")
             .setPositiveButton("Yes") { _, _ ->
                 // Store the dataList inside deletedItems and delete all items
                 val deletedItems = listAdapter.getAllItems()
@@ -145,7 +145,7 @@ class ListFragment : Fragment() {
 
     private fun showSnackbarAndRestoreAllItems(deletedItems: List<ToDoData>) {
         val snackbar = Snackbar.make(
-            binding.root, "Successfully removed everything.", Snackbar.LENGTH_LONG
+            binding.root, "SUCCESSFULLY REMOVED EVERYTHING", Snackbar.LENGTH_LONG
         )
         snackbar.setAction("Undo") {
             for (i in deletedItems.indices) mToDoViewModel.createItem(deletedItems[i])
@@ -197,7 +197,7 @@ class ListFragment : Fragment() {
 
     private fun showSnackbarAndRestoreItem(deletedItem: ToDoData) {
         val snackbar = Snackbar.make(
-            binding.root, "Deleted '${deletedItem.title}'", Snackbar.LENGTH_LONG
+            binding.root, "Deleted: ${deletedItem.title}", Snackbar.LENGTH_LONG
         )
         snackbar.setAction("Undo") { mToDoViewModel.createItem(deletedItem) }
         snackbar.show()

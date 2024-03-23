@@ -91,11 +91,11 @@ class UpdateFragment : Fragment() {
 
     private fun showAlertDialogAndDeleteItem() {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Delete '${args.currentItem.title}'?")
-            .setMessage("Are you sure you want to remove '${args.currentItem.title}'?")
+            .setTitle("Delete [ ${args.currentItem.title} ]?")
+            .setMessage("[ ${args.currentItem.title} ] will be deleted. Are you sure?")
             .setPositiveButton("Yes") { _, _ ->
                 mToDoViewModel.deleteItem(args.currentItem)
-                makeSnackbar("Successfully Removed: ${args.currentItem.title}")
+                makeSnackbar("Deleted: ${args.currentItem.title}")
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
             }
             .setNegativeButton("No", null)
