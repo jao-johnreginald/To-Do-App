@@ -3,7 +3,7 @@
     <style name="Base.Theme.ToDoApp" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="colorPrimary">@color/blue_700</item>
+        <item name="colorPrimary">@color/blue_500</item>
         <item name="colorOnSurface">@color/blue_gray_900</item>
         <item name="colorOnSurfaceVariant">@color/blue_gray_400</item>
         <item name="colorPrimaryContainer">@color/blue_gray_100</item>
