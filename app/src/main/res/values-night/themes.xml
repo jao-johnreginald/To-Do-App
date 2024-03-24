@@ -7,9 +7,6 @@
         <item name="colorOnSurface">@color/gray_100</item>
         <item name="colorOnSurfaceVariant">@color/gray_400</item>
         <item name="colorPrimaryContainer">@color/gray_500</item>
-        <item name="colorPrimarySurface">@color/blue_700</item>
-
-        <item name="colorPrimaryVariant">@color/blue_700</item>
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="colorPrimarySurface">@color/black</item>
     </style>
 </resources>

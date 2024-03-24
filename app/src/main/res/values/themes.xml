@@ -7,10 +7,7 @@
         <item name="colorOnSurface">@color/blue_gray_900</item>
         <item name="colorOnSurfaceVariant">@color/blue_gray_400</item>
         <item name="colorPrimaryContainer">@color/blue_gray_100</item>
-        <item name="colorPrimarySurface">@color/blue_200</item>
-
-        <item name="colorPrimaryVariant">@color/blue_700</item>
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="colorPrimarySurface">@color/white</item>
     </style>
 
     <style name="RowLayoutTextTitle">
@@ -38,7 +35,10 @@
     </style>
 
     <style name="FragmentListFAB">
-        <item name="backgroundTint">?attr/colorPrimarySurface</item>
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="tint">?attr/colorPrimarySurface</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
     </style>
 
     <style name="Theme.ToDoApp" parent="Base.Theme.ToDoApp" />
