@@ -120,7 +120,7 @@ class AddFragment : Fragment() {
         // Set the Spinner color
         binding.spinner.onItemSelectedListener = mSharedViewModel.spinnerListener
         // Intercept the back button
-        requireActivity().onBackPressedDispatcher.addCallback {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             if (binding.etTitle.text.isNotEmpty() || binding.etDescription.text.isNotEmpty()) {
                 showDialogAndSaveChanges()
             } else {
