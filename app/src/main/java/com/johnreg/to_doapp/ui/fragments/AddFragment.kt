@@ -124,7 +124,8 @@ class AddFragment : Fragment() {
             if (binding.etTitle.text.isNotEmpty() || binding.etDescription.text.isNotEmpty()) {
                 showDialogAndSaveChanges()
             } else {
-                findNavController().navigate(R.id.action_addFragment_to_listFragment)
+                isEnabled = false
+                requireActivity().onBackPressedDispatcher.onBackPressed()
             }
         }
     }
