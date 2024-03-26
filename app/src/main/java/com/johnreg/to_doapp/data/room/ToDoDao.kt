@@ -46,18 +46,22 @@ interface ToDoDao {
     H% - search for the priorities that start with H, meaning HIGH
     1 - return the high priority results first
      */
-    @Query("SELECT * FROM todo_table ORDER BY CASE" +
-            " WHEN priority LIKE 'H%' THEN 1" +
-            " WHEN priority LIKE 'M%' THEN 2" +
-            " WHEN priority LIKE 'L%' THEN 3" +
-            " END")
+    @Query(
+        "SELECT * FROM todo_table ORDER BY CASE" +
+                " WHEN priority LIKE 'H%' THEN 1" +
+                " WHEN priority LIKE 'M%' THEN 2" +
+                " WHEN priority LIKE 'L%' THEN 3" +
+                " END"
+    )
     fun sortByHighPriority(): Flow<List<ToDoData>>
 
-    @Query("SELECT * FROM todo_table ORDER BY CASE" +
-            " WHEN priority LIKE 'L%' THEN 1" +
-            " WHEN priority LIKE 'M%' THEN 2" +
-            " WHEN priority LIKE 'H%' THEN 3" +
-            " END")
+    @Query(
+        "SELECT * FROM todo_table ORDER BY CASE" +
+                " WHEN priority LIKE 'L%' THEN 1" +
+                " WHEN priority LIKE 'M%' THEN 2" +
+                " WHEN priority LIKE 'H%' THEN 3" +
+                " END"
+    )
     fun sortByLowPriority(): Flow<List<ToDoData>>
 
 }
