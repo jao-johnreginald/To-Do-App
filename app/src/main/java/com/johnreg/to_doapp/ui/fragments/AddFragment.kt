@@ -19,6 +19,7 @@ import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentAddBinding
 import com.johnreg.to_doapp.ui.sharedviewmodel.SharedViewModel
+import com.johnreg.to_doapp.utils.hideKeyboardFrom
 
 class AddFragment : Fragment() {
 
@@ -41,7 +42,7 @@ class AddFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setMenu()
-        setSpinner()
+        setUI()
     }
 
     private fun setMenu() {
@@ -50,11 +51,10 @@ class AddFragment : Fragment() {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 menuInflater.inflate(R.menu.add_fragment_menu, menu)
             }
-
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     R.id.menu_add -> {
-                        insertData()
+                        createNewItem()
                         true
                     }
                     else -> false
@@ -63,25 +63,31 @@ class AddFragment : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    private fun insertData() {
-        when {
-            binding.etTitle.text.isEmpty() -> makeSnackbar("Please add a title.")
-            else -> {
-                val newData = ToDoData(
-                    title = binding.etTitle.text.toString(),
-                    description = binding.etDescription.text.toString(),
-                    priority = mSharedViewModel.parseStringToPriority(binding.spinner.selectedItem.toString())
-                )
-                mToDoViewModel.createItem(newData)
-                makeSnackbar("Successfully added!")
-                // Navigate back
-                findNavController().navigate(R.id.action_addFragment_to_listFragment)
-            }
+    private fun createNewItem() = when {
+        binding.etTitle.text.isEmpty() -> {
+            hideKeyboardFrom(requireContext(), binding.root)
+            Snackbar.make(binding.root, "PLEASE ADD A TITLE", Snackbar.LENGTH_SHORT).show()
+        }
+        else -> {
+            val newItem = ToDoData(
+                title = binding.etTitle.text.toString(),
+                description = binding.etDescription.text.toString(),
+                priority = mSharedViewModel.parseStringToPriority(binding.spinner.selectedItem.toString())
+            )
+            mToDoViewModel.createItem(newItem)
+            hideKeyboardFrom(requireContext(), binding.root)
+            showSnackbarWithDismissButton("Added: ${binding.etTitle.text}")
+            // Navigate back
+            findNavController().navigate(R.id.action_addFragment_to_listFragment)
         }
     }
 
-    private fun makeSnackbar(text: String) = Snackbar.make(binding.root, text, Snackbar.LENGTH_SHORT).show()
+    private fun showSnackbarWithDismissButton(text: String) {
+        val snackbar = Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG)
+        snackbar.setAction("Dismiss") { snackbar.dismiss() }
+        snackbar.show()
+    }
 
-    private fun setSpinner() { binding.spinner.onItemSelectedListener = mSharedViewModel.spinnerListener }
+    private fun setUI() { binding.spinner.onItemSelectedListener = mSharedViewModel.spinnerListener }
 
 }
