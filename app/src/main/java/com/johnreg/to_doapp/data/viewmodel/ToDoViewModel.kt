@@ -5,10 +5,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.johnreg.to_doapp.data.room.ToDoDatabase
 import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.repository.ToDoRepository
 import com.johnreg.to_doapp.data.room.ToDoDao
+import com.johnreg.to_doapp.data.room.ToDoDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
