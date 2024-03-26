@@ -7,12 +7,14 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.johnreg.to_doapp.R
 import com.johnreg.to_doapp.data.models.ToDoData
@@ -53,6 +55,7 @@ class AddFragment : Fragment() {
             }
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
+                    android.R.id.home -> areThereChanges()
                     R.id.menu_add -> {
                         createNewItem()
                         true
@@ -61,6 +64,31 @@ class AddFragment : Fragment() {
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun areThereChanges(): Boolean {
+        return if (binding.etTitle.text.isNotEmpty() || binding.etDescription.text.isNotEmpty()) {
+            showDialogAndSaveChanges()
+            true
+        } else {
+            hideKeyboardFrom(requireContext(), binding.root)
+            false
+        }
+    }
+
+    private fun showDialogAndSaveChanges() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Save Changes")
+            .setMessage("Do you want to save your changes?")
+            .setPositiveButton("Save") { _, _ ->
+                createNewItem()
+            }
+            .setNegativeButton("Don't Save") { _, _ ->
+                hideKeyboardFrom(requireContext(), binding.root)
+                findNavController().navigate(R.id.action_addFragment_to_listFragment)
+            }
+            .setNeutralButton("Cancel", null)
+            .show()
     }
 
     private fun createNewItem() = when {
@@ -88,6 +116,17 @@ class AddFragment : Fragment() {
         snackbar.show()
     }
 
-    private fun setUI() { binding.spinner.onItemSelectedListener = mSharedViewModel.spinnerListener }
+    private fun setUI() {
+        // Set the Spinner color
+        binding.spinner.onItemSelectedListener = mSharedViewModel.spinnerListener
+        // Intercept the back button
+        requireActivity().onBackPressedDispatcher.addCallback {
+            if (binding.etTitle.text.isNotEmpty() || binding.etDescription.text.isNotEmpty()) {
+                showDialogAndSaveChanges()
+            } else {
+                findNavController().navigate(R.id.action_addFragment_to_listFragment)
+            }
+        }
+    }
 
 }
