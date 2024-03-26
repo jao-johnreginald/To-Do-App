@@ -32,14 +32,12 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
             binding.tvTitle.text = currentItem.title
             binding.tvDescription.text = currentItem.description
 
-            when (currentItem.priority) {
-                Priority.HIGH -> binding.priorityIndicator
-                    .setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.red))
-                Priority.MEDIUM -> binding.priorityIndicator
-                    .setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.yellow))
-                Priority.LOW -> binding.priorityIndicator
-                    .setCardBackgroundColor(ContextCompat.getColor(itemView.context, R.color.green))
+            val color = when (currentItem.priority) {
+                Priority.HIGH -> ContextCompat.getColor(itemView.context, R.color.red)
+                Priority.MEDIUM -> ContextCompat.getColor(itemView.context, R.color.yellow)
+                Priority.LOW -> ContextCompat.getColor(itemView.context, R.color.green)
             }
+            binding.priorityIndicator.setCardBackgroundColor(color)
 
             if (currentItem.description.isNullOrEmpty()) binding.tvDescription.visibility = View.GONE
             else binding.tvDescription.visibility = View.VISIBLE
