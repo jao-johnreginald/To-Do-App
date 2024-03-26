@@ -76,7 +76,7 @@ class ListFragment : Fragment() {
                 return when (menuItem.itemId) {
                     R.id.menu_delete_all -> {
                         // Show the alert dialog and delete all items
-                        showAlertDialogAndDeleteAllItems()
+                        showDialogAndDeleteAllItems()
                         true
                     }
                     R.id.menu_priority_high -> {
@@ -128,7 +128,7 @@ class ListFragment : Fragment() {
         }
     }
 
-    private fun showAlertDialogAndDeleteAllItems() {
+    private fun showDialogAndDeleteAllItems() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Delete Everything?")
             .setMessage("Are you sure you want to delete everything?")
