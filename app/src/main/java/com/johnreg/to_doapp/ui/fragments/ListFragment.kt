@@ -145,7 +145,7 @@ class ListFragment : Fragment() {
 
     private fun showSnackbarAndRestoreAllItems(deletedItems: List<ToDoData>) {
         val snackbar = Snackbar.make(
-            binding.root, "SUCCESSFULLY REMOVED EVERYTHING", Snackbar.LENGTH_LONG
+            binding.root, "Successfully Removed Everything!", Snackbar.LENGTH_LONG
         )
         snackbar.setAction("Undo") {
             for (i in deletedItems.indices) mToDoViewModel.createItem(deletedItems[i])

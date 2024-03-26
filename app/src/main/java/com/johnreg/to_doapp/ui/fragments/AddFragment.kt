@@ -94,7 +94,7 @@ class AddFragment : Fragment() {
     private fun createNewItem() = when {
         binding.etTitle.text.isEmpty() -> {
             hideKeyboardFrom(requireContext(), binding.root)
-            Snackbar.make(binding.root, "PLEASE ADD A TITLE", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "Please add a title.", Snackbar.LENGTH_SHORT).show()
         }
         else -> {
             val newItem = ToDoData(
