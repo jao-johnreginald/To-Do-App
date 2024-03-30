@@ -103,16 +103,10 @@ class AddFragment : Fragment() {
             )
             mToDoViewModel.createItem(newItem)
             hideKeyboardFrom(requireContext(), binding.root)
-            showSnackbarWithDismissButton("Added: ${binding.etTitle.text}")
+            mSharedViewModel.showSnackbarAndDismiss("Added: ${binding.etTitle.text}", binding.root)
             // Navigate back
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
         }
-    }
-
-    private fun showSnackbarWithDismissButton(text: String) {
-        val snackbar = Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG)
-        snackbar.setAction("Dismiss") { snackbar.dismiss() }
-        snackbar.show()
     }
 
     private fun setUI() {

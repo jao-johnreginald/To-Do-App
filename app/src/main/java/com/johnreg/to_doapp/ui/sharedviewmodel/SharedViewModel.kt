@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.android.material.snackbar.Snackbar
 import com.johnreg.to_doapp.R
 import com.johnreg.to_doapp.data.models.Priority
 import com.johnreg.to_doapp.data.models.ToDoData
@@ -50,6 +51,12 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         Priority.HIGH -> 0
         Priority.MEDIUM -> 1
         Priority.LOW -> 2
+    }
+
+    fun showSnackbarAndDismiss(text: String, view: View) {
+        val snackbar = Snackbar.make(view, text, Snackbar.LENGTH_LONG)
+        snackbar.setAction("Dismiss") { snackbar.dismiss() }
+        snackbar.show()
     }
 
 }
