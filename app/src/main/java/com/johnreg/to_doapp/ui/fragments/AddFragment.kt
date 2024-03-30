@@ -50,11 +50,21 @@ class AddFragment : Fragment() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Add menu items here
                 menuInflater.inflate(R.menu.add_fragment_menu, menu)
             }
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                // Handle the menu selection
                 return when (menuItem.itemId) {
-                    android.R.id.home -> areThereChanges()
+                    android.R.id.home -> {
+                        if (isNotEmptyTexts()) {
+                            showDialogAndSaveChanges()
+                            true
+                        } else {
+                            hideKeyboardFrom(requireContext(), binding.root)
+                            false
+                        }
+                    }
                     R.id.menu_add -> {
                         createNewItem()
                         true
@@ -63,16 +73,6 @@ class AddFragment : Fragment() {
                 }
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-    }
-
-    private fun areThereChanges(): Boolean {
-        return if (binding.etTitle.text.isNotEmpty() || binding.etDescription.text.isNotEmpty()) {
-            showDialogAndSaveChanges()
-            true
-        } else {
-            hideKeyboardFrom(requireContext(), binding.root)
-            false
-        }
     }
 
     private fun showDialogAndSaveChanges() {
@@ -114,13 +114,17 @@ class AddFragment : Fragment() {
         binding.spinner.onItemSelectedListener = mSharedViewModel.spinnerListener
         // Intercept the back button
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            if (binding.etTitle.text.isNotEmpty() || binding.etDescription.text.isNotEmpty()) {
+            if (isNotEmptyTexts()) {
                 showDialogAndSaveChanges()
             } else {
                 isEnabled = false
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
         }
+    }
+
+    private fun isNotEmptyTexts(): Boolean {
+        return binding.etTitle.text.isNotEmpty() || binding.etDescription.text.isNotEmpty()
     }
 
 }
