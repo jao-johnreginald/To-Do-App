@@ -10,9 +10,7 @@
         app:showAsAction="ifRoom" />
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/menu_sortBy"
-            android:title="@string/sort_by">
+        <item android:title="@string/sort_by">
             <menu>
                 <item
                     android:id="@+id/menu_priority_high"
