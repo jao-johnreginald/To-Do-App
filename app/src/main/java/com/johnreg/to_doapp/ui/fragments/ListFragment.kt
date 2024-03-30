@@ -75,12 +75,13 @@ class ListFragment : Fragment() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                // Inflate the menu
+                // Add menu items here
                 menuInflater.inflate(R.menu.list_fragment_menu, menu)
                 // Set the SearchView and Listener
                 setSearchViewAndListener(menu)
             }
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                // Handle the menu selection
                 return when (menuItem.itemId) {
                     R.id.menu_delete_all -> {
                         // Show the alert dialog and delete all items
@@ -89,14 +90,18 @@ class ListFragment : Fragment() {
                     }
                     R.id.menu_priority_high -> {
                         // Sort by high priority
-                        mToDoViewModel.sortByHighPriority.observe(viewLifecycleOwner) { sortByHighPriority ->
+                        mToDoViewModel.sortByHighPriority.observe(
+                            viewLifecycleOwner
+                        ) { sortByHighPriority ->
                             listAdapter.setData(sortByHighPriority)
                         }
                         true
                     }
                     R.id.menu_priority_low -> {
                         // Sort by low priority
-                        mToDoViewModel.sortByLowPriority.observe(viewLifecycleOwner) { sortByLowPriority ->
+                        mToDoViewModel.sortByLowPriority.observe(
+                            viewLifecycleOwner
+                        ) { sortByLowPriority ->
                             listAdapter.setData(sortByLowPriority)
                         }
                         true
@@ -128,10 +133,11 @@ class ListFragment : Fragment() {
         val searchQuery = "%$query%"
         // Inside the searchDatabase Query pass this searchQuery and observe this LiveData
         // Whenever the data changes or we type something, the observer and adapter will be notified
-        mToDoViewModel.getSearchedItems(searchQuery)
-            .observeOnceOnly(viewLifecycleOwner) { searchedItems ->
-                listAdapter.setData(searchedItems)
-            }
+        mToDoViewModel.getSearchedItems(searchQuery).observeOnceOnly(
+            viewLifecycleOwner
+        ) { searchedItems ->
+            listAdapter.setData(searchedItems)
+        }
     }
 
     private fun showDialogAndDeleteAllItems() {
