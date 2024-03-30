@@ -31,9 +31,11 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 class ListFragment : Fragment() {
 
-    private lateinit var binding: FragmentListBinding
+    private var _binding: FragmentListBinding? = null
+    private val binding get() = _binding!!
 
-    private val listAdapter: ListAdapter by lazy { ListAdapter() }
+    private var _listAdapter: ListAdapter? = null
+    private val listAdapter get() = _listAdapter!!
 
     private val mToDoViewModel: ToDoViewModel by viewModels()
     private val mSharedViewModel: SharedViewModel by viewModels()
@@ -43,18 +45,25 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentListBinding.inflate(inflater, container, false)
+        _binding = FragmentListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _listAdapter = ListAdapter()
 
         setFabListener()
         setMenu()
         setRecyclerView()
         setSwipeToDelete()
         showViewsIfDatabaseIsEmpty()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        _listAdapter = null
     }
 
     private fun setFabListener() = binding.fab.setOnClickListener {
@@ -174,7 +183,10 @@ class ListFragment : Fragment() {
 
     private fun setSwipeToDelete() {
         // 0 because we're not going to drag, only swipe. LEFT because we're going to swipe left
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
             // Return false because we're not going to move our items
             override fun onMove(
                 recyclerView: RecyclerView,
