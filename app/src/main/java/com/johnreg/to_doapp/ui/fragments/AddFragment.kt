@@ -83,7 +83,12 @@ class AddFragment : Fragment() {
                 createNewItem()
             }
             .setNegativeButton("Don't Save") { _, _ ->
+                // Hide keyboard, show Snackbar, navigate back
                 hideKeyboardFrom(requireContext(), binding.root)
+                mSharedViewModel.showSnackbarAndDismiss(
+                    "Changes not saved.",
+                    binding.root
+                )
                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
             }
             .setNeutralButton("Cancel", null)
@@ -102,9 +107,9 @@ class AddFragment : Fragment() {
                 priority = mSharedViewModel.parseStringToPriority(binding.spinner.selectedItem.toString())
             )
             mToDoViewModel.createItem(newItem)
+            // Hide keyboard, show Snackbar, navigate back
             hideKeyboardFrom(requireContext(), binding.root)
             mSharedViewModel.showSnackbarAndDismiss("Added: ${binding.etTitle.text}", binding.root)
-            // Navigate back
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
         }
     }

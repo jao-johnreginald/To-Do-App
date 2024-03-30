@@ -60,6 +60,4 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     fun getCurrentItem(position: Int): ToDoData = dataList[position]
 
-    fun getAllItems(): List<ToDoData> = dataList
-
 }

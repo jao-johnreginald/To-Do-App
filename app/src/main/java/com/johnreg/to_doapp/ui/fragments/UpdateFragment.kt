@@ -90,7 +90,12 @@ class UpdateFragment : Fragment() {
                 updateItem()
             }
             .setNegativeButton("Don't Save") { _, _ ->
+                // Hide keyboard, show Snackbar, navigate back
                 hideKeyboardFrom(requireContext(), binding.root)
+                mSharedViewModel.showSnackbarAndDismiss(
+                    "Changes not saved.",
+                    binding.root
+                )
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
             }
             .setNeutralButton("Cancel", null)
@@ -110,9 +115,9 @@ class UpdateFragment : Fragment() {
                 priority = mSharedViewModel.parseStringToPriority(binding.spinner.selectedItem.toString())
             )
             mToDoViewModel.updateItem(updatedItem)
+            // Hide keyboard, show Snackbar, navigate back
             hideKeyboardFrom(requireContext(), binding.root)
             mSharedViewModel.showSnackbarAndDismiss("Updated: ${updatedItem.title}", binding.root)
-            // Navigate back
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
     }
@@ -123,8 +128,12 @@ class UpdateFragment : Fragment() {
             .setMessage("[ ${args.currentItem.title} ] will be deleted. Are you sure?")
             .setPositiveButton("Yes") { _, _ ->
                 mToDoViewModel.deleteItem(args.currentItem)
+                // Hide keyboard, show Snackbar, navigate back
                 hideKeyboardFrom(requireContext(), binding.root)
-                Snackbar.make(binding.root, "Deleted: ${args.currentItem.title}", Snackbar.LENGTH_SHORT).show()
+                mSharedViewModel.showSnackbarAndDismiss(
+                    "Deleted: ${args.currentItem.title}",
+                    binding.root
+                )
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
             }
             .setNegativeButton("No", null)

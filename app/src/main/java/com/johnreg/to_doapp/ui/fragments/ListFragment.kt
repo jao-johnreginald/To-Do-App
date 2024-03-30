@@ -146,10 +146,11 @@ class ListFragment : Fragment() {
             .setMessage("Are you sure you want to delete everything?")
             .setPositiveButton("Yes") { _, _ ->
                 // Store the dataList inside deletedItems and delete all items
-                val deletedItems = listAdapter.getAllItems()
+                mToDoViewModel.getAllItems.observeOnceOnly(viewLifecycleOwner) { deletedItems ->
+                    // Restore deleted dataList
+                    showSnackbarAndRestoreAllItems(deletedItems)
+                }
                 mToDoViewModel.deleteAllItems()
-                // Restore deleted dataList
-                showSnackbarAndRestoreAllItems(deletedItems)
             }
             .setNegativeButton("No", null)
             .show()
