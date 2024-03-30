@@ -12,10 +12,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ToDoDao {
 
-    /*
-    Convert Flow from coroutines into LiveData in ViewModel
-    No need to use suspend because Room already does this without using the main thread
-     */
+    // Convert Flow from coroutines into LiveData in ViewModel
+    // No need to use suspend because Room already does this without using the main thread
     @Query("SELECT * FROM todo_table ORDER BY id ASC")
     fun getAllItems(): Flow<List<ToDoData>>
 
@@ -42,10 +40,8 @@ interface ToDoDao {
     @Query("SELECT * FROM todo_table WHERE title LIKE :searchQuery")
     fun getSearchedItems(searchQuery: String): Flow<List<ToDoData>>
 
-    /*
-    H% - search for the priorities that start with H, meaning HIGH
-    1 - return the high priority results first
-     */
+    // H% - search for the priorities that start with H, meaning HIGH
+    // 1 - return the high priority results first
     @Query(
         "SELECT * FROM todo_table ORDER BY CASE" +
                 " WHEN priority LIKE 'H%' THEN 1" +
