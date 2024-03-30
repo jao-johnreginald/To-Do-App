@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -21,6 +22,7 @@ import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentUpdateBinding
 import com.johnreg.to_doapp.ui.sharedviewmodel.SharedViewModel
+import com.johnreg.to_doapp.utils.hideKeyboardFrom
 
 class UpdateFragment : Fragment() {
 
@@ -51,17 +53,27 @@ class UpdateFragment : Fragment() {
         val menuHost: MenuHost = requireActivity()
         menuHost.addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Add menu items here
                 menuInflater.inflate(R.menu.update_fragment_menu, menu)
             }
-
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                // Handle the menu selection
                 return when (menuItem.itemId) {
+                    android.R.id.home -> {
+                        if (isNotItemEqualText()) {
+                            showDialogAndSaveChanges()
+                            true
+                        } else {
+                            hideKeyboardFrom(requireContext(), binding.root)
+                            false
+                        }
+                    }
                     R.id.menu_save -> {
                         updateItem()
                         true
                     }
                     R.id.menu_delete -> {
-                        showAlertDialogAndDeleteItem()
+                        showDialogAndDeleteItem()
                         true
                     }
                     else -> false
@@ -70,45 +82,82 @@ class UpdateFragment : Fragment() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    private fun updateItem() {
-        when {
-            binding.etTitle.text.isEmpty() -> makeSnackbar("Please add a title.")
-            else -> {
-                val updatedItem = ToDoData(
-                    id = args.currentItem.id,
-                    title = binding.etTitle.text.toString(),
-                    description = binding.etDescription.text.toString(),
-                    priority = mSharedViewModel.parseStringToPriority(binding.spinner.selectedItem.toString())
-                )
-                mToDoViewModel.updateItem(updatedItem)
-                makeSnackbar("Successfully updated!")
-                // Navigate back
+    private fun showDialogAndSaveChanges() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Save Changes")
+            .setMessage("Do you want to save your changes?")
+            .setPositiveButton("Save") { _, _ ->
+                updateItem()
+            }
+            .setNegativeButton("Don't Save") { _, _ ->
+                hideKeyboardFrom(requireContext(), binding.root)
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
             }
+            .setNeutralButton("Cancel", null)
+            .show()
+    }
+
+    private fun updateItem() = when {
+        binding.etTitle.text.isEmpty() -> {
+            hideKeyboardFrom(requireContext(), binding.root)
+            Snackbar.make(binding.root, "Please add a title.", Snackbar.LENGTH_SHORT).show()
+        }
+        else -> {
+            val updatedItem = ToDoData(
+                id = args.currentItem.id,
+                title = binding.etTitle.text.toString(),
+                description = binding.etDescription.text.toString(),
+                priority = mSharedViewModel.parseStringToPriority(binding.spinner.selectedItem.toString())
+            )
+            mToDoViewModel.updateItem(updatedItem)
+            hideKeyboardFrom(requireContext(), binding.root)
+            mSharedViewModel.showSnackbarAndDismiss("Updated: ${updatedItem.title}", binding.root)
+            // Navigate back
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
     }
 
-    private fun showAlertDialogAndDeleteItem() {
+    private fun showDialogAndDeleteItem() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Delete [ ${args.currentItem.title} ]?")
             .setMessage("[ ${args.currentItem.title} ] will be deleted. Are you sure?")
             .setPositiveButton("Yes") { _, _ ->
                 mToDoViewModel.deleteItem(args.currentItem)
-                makeSnackbar("Deleted: ${args.currentItem.title}")
+                hideKeyboardFrom(requireContext(), binding.root)
+                Snackbar.make(binding.root, "Deleted: ${args.currentItem.title}", Snackbar.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
             }
             .setNegativeButton("No", null)
-            .create()
             .show()
     }
 
-    private fun makeSnackbar(text: String) = Snackbar.make(binding.root, text, Snackbar.LENGTH_SHORT).show()
-
     private fun setUI() {
+        // Set the texts
         binding.etTitle.setText(args.currentItem.title)
         binding.etDescription.setText(args.currentItem.description)
+        // Set the spinner selection and color
         binding.spinner.setSelection(mSharedViewModel.parsePriorityToInt(args.currentItem.priority))
         binding.spinner.onItemSelectedListener = mSharedViewModel.spinnerListener
+        // Intercept the back button
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            if (isNotItemEqualText()) {
+                showDialogAndSaveChanges()
+            } else {
+                isEnabled = false
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+        }
+    }
+
+    private fun isNotItemEqualText(): Boolean {
+        return args.currentItem.title !=
+                binding.etTitle.text.toString()
+                ||
+                args.currentItem.description !=
+                binding.etDescription.text.toString()
+                ||
+                args.currentItem.priority !=
+                mSharedViewModel.parseStringToPriority(binding.spinner.selectedItem.toString())
     }
 
 }
