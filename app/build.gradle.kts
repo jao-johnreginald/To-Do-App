@@ -22,7 +22,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -71,4 +72,6 @@ dependencies {
     // RecyclerView Animator
     implementation("jp.wasabeef:recyclerview-animators:4.0.2")
 
+    // debugImplementation because LeakCanary should only run in debug builds.
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.13")
 }
