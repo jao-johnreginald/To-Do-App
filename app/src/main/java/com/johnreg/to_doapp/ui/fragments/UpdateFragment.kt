@@ -28,9 +28,8 @@ class UpdateFragment : Fragment() {
 
     private val args: UpdateFragmentArgs by navArgs()
 
-    private val mSharedViewModel: SharedViewModel by viewModels()
-
     private val mToDoViewModel: ToDoViewModel by viewModels()
+    private val mSharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

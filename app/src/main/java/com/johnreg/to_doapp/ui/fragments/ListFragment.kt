@@ -36,7 +36,6 @@ class ListFragment : Fragment() {
     private val listAdapter: ListAdapter by lazy { ListAdapter() }
 
     private val mToDoViewModel: ToDoViewModel by viewModels()
-
     private val mSharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreateView(

@@ -28,7 +28,6 @@ class AddFragment : Fragment() {
     private lateinit var binding: FragmentAddBinding
 
     private val mToDoViewModel: ToDoViewModel by viewModels()
-
     private val mSharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreateView(
