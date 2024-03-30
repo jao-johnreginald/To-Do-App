@@ -53,22 +53,22 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         _listAdapter = ListAdapter()
 
-        setFabListener()
         setMenu()
-        setRecyclerView()
+        setFabAndRecyclerView()
         setSwipeToDelete()
-        showViewsIfDatabaseIsEmpty()
     }
 
+    // Fixes adapter still observing getSearchedItems after app resumes from background
+    override fun onResume() {
+        super.onResume()
+        observeAllData()
+    }
+
+    // Fixes FragmentListBinding and ListAdapter memory leaks
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
         _listAdapter = null
-    }
-
-    private fun setFabListener() = binding.fab.setOnClickListener {
-        // Use nav controllers to navigate to add fragment
-        findNavController().navigate(R.id.action_listFragment_to_addFragment)
     }
 
     private fun setMenu() {
@@ -90,7 +90,7 @@ class ListFragment : Fragment() {
                     }
                     R.id.menu_priority_high -> {
                         // Sort by high priority
-                        mToDoViewModel.sortByHighPriority.observe(
+                        mToDoViewModel.sortByHighPriority.observeOnceOnly(
                             viewLifecycleOwner
                         ) { sortByHighPriority ->
                             listAdapter.setData(sortByHighPriority)
@@ -99,7 +99,7 @@ class ListFragment : Fragment() {
                     }
                     R.id.menu_priority_low -> {
                         // Sort by low priority
-                        mToDoViewModel.sortByLowPriority.observe(
+                        mToDoViewModel.sortByLowPriority.observeOnceOnly(
                             viewLifecycleOwner
                         ) { sortByLowPriority ->
                             listAdapter.setData(sortByLowPriority)
@@ -166,7 +166,11 @@ class ListFragment : Fragment() {
         snackbar.show()
     }
 
-    private fun setRecyclerView() {
+    private fun setFabAndRecyclerView() {
+        binding.fab.setOnClickListener {
+            // Use nav controllers to navigate to add fragment
+            findNavController().navigate(R.id.action_listFragment_to_addFragment)
+        }
         binding.recyclerView.apply {
             // Adapter
             adapter = listAdapter
@@ -174,17 +178,6 @@ class ListFragment : Fragment() {
             layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             // Animate the RecyclerView
             itemAnimator = SlideInUpAnimator()
-        }
-        /*
-        Observe this LiveData returned by getAllItems, everytime the database has a change,
-        use that new data to set the Adapter data and update the RecyclerView
-
-        Also set the MutableLiveData returned by isDatabaseEmpty in SharedViewModel
-        to whether or not the dataList is empty
-         */
-        mToDoViewModel.getAllItems.observe(viewLifecycleOwner) { newDataList ->
-            mSharedViewModel.setMutableLiveData(newDataList)
-            listAdapter.setData(newDataList)
         }
     }
 
@@ -219,7 +212,13 @@ class ListFragment : Fragment() {
         snackbar.show()
     }
 
-    private fun showViewsIfDatabaseIsEmpty() {
+    private fun observeAllData() {
+        // Observe this getAllItems LiveData, everytime it changes, get the newDataList
+        // Set the listAdapter data and the isDataEmpty MutableLiveData
+        mToDoViewModel.getAllItems.observe(viewLifecycleOwner) { newDataList ->
+            listAdapter.setData(newDataList)
+            mSharedViewModel.setMutableLiveData(newDataList)
+        }
         // Observe this MutableLiveData object and whenever its value changes run an if check
         // If the boolean is true then show the Views, if false then hide the Views
         mSharedViewModel.isDatabaseEmpty.observe(viewLifecycleOwner) { isDatabaseEmpty ->
