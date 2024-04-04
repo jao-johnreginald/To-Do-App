@@ -33,6 +33,8 @@ abstract class ToDoDatabase : RoomDatabase() {
         If INSTANCE is not null, then return that same INSTANCE
         If INSTANCE is null, then inside a synchronized block create an instance of our database class
 
+        Elvis operator - if it's not null, return left, otherwise, return right
+
         synchronized - do not allow this block of code to run on multiple threads
         If more than one thread tries to create an instance of the database at the same time,
         it will be blocked, it allows creation of only one instance at a time
@@ -43,21 +45,17 @@ abstract class ToDoDatabase : RoomDatabase() {
         addCallback() - add data entries to the database by default
          */
         fun getDatabase(context: Context, scope: CoroutineScope): ToDoDatabase {
-            val tempInstance = INSTANCE
-            return when {
-                tempInstance != null -> tempInstance
-                else -> synchronized(this) {
-                    val instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        ToDoDatabase::class.java,
-                        "todo_database"
-                    )
-                        .fallbackToDestructiveMigration()
-                        .addCallback(TodoDatabaseCallback(scope))
-                        .build()
-                    INSTANCE = instance
-                    instance
-                }
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    ToDoDatabase::class.java,
+                    "todo_database"
+                )
+                    .fallbackToDestructiveMigration()
+                    .addCallback(TodoDatabaseCallback(scope))
+                    .build()
+                INSTANCE = instance
+                instance
             }
         }
     }
