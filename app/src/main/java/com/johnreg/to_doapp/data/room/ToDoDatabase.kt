@@ -114,11 +114,6 @@ abstract class ToDoDatabase : RoomDatabase() {
                 description = "Buy a gift for my girlfriend"
             ),
             ToDoData(
-                title = "Dishes",
-                priority = Priority.HIGH,
-                description = "Wash the dishes before she comes back!"
-            ),
-            ToDoData(
                 title = "Feed the dogs",
                 priority = Priority.MEDIUM,
                 description = """
@@ -127,6 +122,11 @@ abstract class ToDoDatabase : RoomDatabase() {
                                 3. Buy it and take it to shelters
                                 4. Adopt one?
                             """.trimIndent()
+            ),
+            ToDoData(
+                title = "Dishes",
+                priority = Priority.HIGH,
+                description = "Wash the dishes before she comes back!"
             ),
             ToDoData(
                 title = "Study",
@@ -147,24 +147,24 @@ abstract class ToDoDatabase : RoomDatabase() {
                             """.trimIndent()
             ),
             ToDoData(
-                title = "Bicycle",
-                priority = Priority.LOW,
-                description = "Buy one!"
-            ),
-            ToDoData(
                 title = "Football",
                 priority = Priority.MEDIUM,
                 description = "Play football with friends."
             ),
             ToDoData(
-                title = "Vacation",
-                priority = Priority.HIGH,
-                description = "Vacation with my family"
+                title = "Bicycle",
+                priority = Priority.LOW,
+                description = "Buy one!"
             ),
             ToDoData(
                 title = "Visit grandma",
                 priority = Priority.HIGH,
                 description = "Don't forget this one!"
+            ),
+            ToDoData(
+                title = "Vacation",
+                priority = Priority.HIGH,
+                description = "Vacation with my family"
             ),
             ToDoData(
                 title = "Wash the car",
