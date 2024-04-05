@@ -39,10 +39,10 @@ abstract class ToDoDatabase : RoomDatabase() {
         If more than one thread tries to create an instance of the database at the same time,
         it will be blocked, it allows creation of only one instance at a time
 
+        addCallback() - add data entries to the database by default
+
         fallbackToDestructiveMigration() - whenever you change the Entity and increase the database version,
         this function will delete all data, call this if you know you may be changing your database schema
-
-        addCallback() - add data entries to the database by default
          */
         fun getDatabase(context: Context, scope: CoroutineScope): ToDoDatabase {
             return INSTANCE ?: synchronized(this) {
@@ -50,10 +50,7 @@ abstract class ToDoDatabase : RoomDatabase() {
                     context.applicationContext,
                     ToDoDatabase::class.java,
                     "todo_database"
-                )
-                    .fallbackToDestructiveMigration()
-                    .addCallback(TodoDatabaseCallback(scope))
-                    .build()
+                ).addCallback(TodoDatabaseCallback(scope)).build()
                 INSTANCE = instance
                 instance
             }
