@@ -46,9 +46,9 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
+    implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -67,11 +67,11 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
 
     // Convert Flow to LiveData with .asLiveData()
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.0")
 
     // RecyclerView Animator
     implementation("jp.wasabeef:recyclerview-animators:4.0.2")
 
     // debugImplementation because LeakCanary should only run in debug builds.
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.13")
+    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
 }
