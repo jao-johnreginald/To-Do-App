@@ -106,13 +106,11 @@ class UpdateFragment : Fragment() {
             .show()
     }
 
-    private fun updateItem() = when {
-        binding.etTitle.text.isEmpty() -> {
+    private fun updateItem() {
+        if (binding.etTitle.text.isEmpty()) {
             hideKeyboard()
             Snackbar.make(binding.root, "Please add a title.", Snackbar.LENGTH_SHORT).show()
-        }
-
-        else -> {
+        } else {
             val updatedItem = ToDoData(
                 id = args.currentItem.id,
                 title = binding.etTitle.text.toString(),
