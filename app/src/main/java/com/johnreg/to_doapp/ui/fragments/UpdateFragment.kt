@@ -16,13 +16,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.johnreg.to_doapp.R
 import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentUpdateBinding
 import com.johnreg.to_doapp.ui.sharedviewmodel.SharedViewModel
 import com.johnreg.to_doapp.utils.hideKeyboard
+import com.johnreg.to_doapp.utils.showSnackbarPleaseAddATitle
 
 class UpdateFragment : Fragment() {
 
@@ -109,7 +109,7 @@ class UpdateFragment : Fragment() {
     private fun updateItem() {
         if (binding.etTitle.text.isEmpty()) {
             hideKeyboard()
-            Snackbar.make(binding.root, "Please add a title.", Snackbar.LENGTH_SHORT).show()
+            showSnackbarPleaseAddATitle()
         } else {
             val updatedItem = ToDoData(
                 id = args.currentItem.id,
