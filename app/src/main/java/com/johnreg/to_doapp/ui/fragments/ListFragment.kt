@@ -80,6 +80,7 @@ class ListFragment : Fragment() {
                 // Set the SearchView and Listener
                 setSearchViewAndListener(menu)
             }
+
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 // Handle the menu selection
                 return when (menuItem.itemId) {
@@ -88,6 +89,7 @@ class ListFragment : Fragment() {
                         showDialogAndDeleteAllItems()
                         true
                     }
+
                     R.id.menu_priority_high -> {
                         // Sort by high priority
                         mToDoViewModel.sortByHighPriority.observeOnceOnly(
@@ -97,6 +99,7 @@ class ListFragment : Fragment() {
                         }
                         true
                     }
+
                     R.id.menu_priority_low -> {
                         // Sort by low priority
                         mToDoViewModel.sortByLowPriority.observeOnceOnly(
@@ -106,6 +109,7 @@ class ListFragment : Fragment() {
                         }
                         true
                     }
+
                     else -> false
                 }
             }
@@ -120,6 +124,7 @@ class ListFragment : Fragment() {
                 hideKeyboard()
                 return true
             }
+
             override fun onQueryTextChange(query: String?): Boolean {
                 // If query is not null, search through the database
                 if (query != null) searchThroughDatabase(query)
@@ -193,6 +198,7 @@ class ListFragment : Fragment() {
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean = false
+
             // Swipe to delete
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 // Store the item being swiped inside deletedItem and delete that item

@@ -38,6 +38,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             }
             textOfSpinner?.setTextColor(color)
         }
+
         override fun onNothingSelected(parent: AdapterView<*>?) {}
     }
 

@@ -28,6 +28,7 @@ abstract class ToDoDatabase : RoomDatabase() {
          */
         @Volatile
         private var INSTANCE: ToDoDatabase? = null
+
         /*
         We want to have only one instance of our database class
         If INSTANCE is not null, then return that same INSTANCE
@@ -70,6 +71,7 @@ abstract class ToDoDatabase : RoomDatabase() {
                 }
             }
         }
+
         private fun getToDoList() = listOf(
             ToDoData(
                 title = "Homework",

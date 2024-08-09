@@ -53,6 +53,7 @@ class AddFragment : Fragment() {
                 // Add menu items here
                 menuInflater.inflate(R.menu.add_fragment_menu, menu)
             }
+
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 // Handle the menu selection
                 return when (menuItem.itemId) {
@@ -65,10 +66,12 @@ class AddFragment : Fragment() {
                             false
                         }
                     }
+
                     R.id.menu_add -> {
                         createNewItem()
                         true
                     }
+
                     else -> false
                 }
             }
@@ -100,6 +103,7 @@ class AddFragment : Fragment() {
             hideKeyboard()
             Snackbar.make(binding.root, "Please add a title.", Snackbar.LENGTH_SHORT).show()
         }
+
         else -> {
             val newItem = ToDoData(
                 title = binding.etTitle.text.toString(),

@@ -56,6 +56,7 @@ class UpdateFragment : Fragment() {
                 // Add menu items here
                 menuInflater.inflate(R.menu.update_fragment_menu, menu)
             }
+
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 // Handle the menu selection
                 return when (menuItem.itemId) {
@@ -68,14 +69,17 @@ class UpdateFragment : Fragment() {
                             false
                         }
                     }
+
                     R.id.menu_save -> {
                         updateItem()
                         true
                     }
+
                     R.id.menu_delete -> {
                         showDialogAndDeleteItem()
                         true
                     }
+
                     else -> false
                 }
             }
@@ -107,6 +111,7 @@ class UpdateFragment : Fragment() {
             hideKeyboard()
             Snackbar.make(binding.root, "Please add a title.", Snackbar.LENGTH_SHORT).show()
         }
+
         else -> {
             val updatedItem = ToDoData(
                 id = args.currentItem.id,

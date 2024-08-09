@@ -15,7 +15,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // FragmentContainerView is not very friendly, you have to access it from the supportFragmentManager
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(
+            R.id.navHostFragment
+        ) as NavHostFragment
+
         navController = navHostFragment.navController
 
         /*
