@@ -27,3 +27,9 @@ fun Fragment.hideKeyboard() {
 fun Fragment.showSnackbarPleaseAddATitle() {
     Snackbar.make(requireView(), "Please add a title.", Snackbar.LENGTH_SHORT).show()
 }
+
+fun Fragment.showSnackbarAndDismiss(text: String) {
+    val snackbar = Snackbar.make(requireView(), text, Snackbar.LENGTH_LONG)
+    snackbar.setAction("Dismiss") { snackbar.dismiss() }
+    snackbar.show()
+}

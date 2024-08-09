@@ -22,6 +22,7 @@ import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentUpdateBinding
 import com.johnreg.to_doapp.ui.sharedviewmodel.SharedViewModel
 import com.johnreg.to_doapp.utils.hideKeyboard
+import com.johnreg.to_doapp.utils.showSnackbarAndDismiss
 import com.johnreg.to_doapp.utils.showSnackbarPleaseAddATitle
 
 class UpdateFragment : Fragment() {
@@ -96,10 +97,7 @@ class UpdateFragment : Fragment() {
             .setNegativeButton("Don't Save") { _, _ ->
                 // Hide keyboard, show Snackbar, navigate back
                 hideKeyboard()
-                mSharedViewModel.showSnackbarAndDismiss(
-                    "Changes not saved.",
-                    binding.root
-                )
+                showSnackbarAndDismiss("Changes not saved.")
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
             }
             .setNeutralButton("Cancel", null)
@@ -120,7 +118,7 @@ class UpdateFragment : Fragment() {
             mToDoViewModel.updateItem(updatedItem)
             // Hide keyboard, show Snackbar, navigate back
             hideKeyboard()
-            mSharedViewModel.showSnackbarAndDismiss("Updated: ${updatedItem.title}", binding.root)
+            showSnackbarAndDismiss("Updated: ${updatedItem.title}")
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
     }
@@ -133,10 +131,7 @@ class UpdateFragment : Fragment() {
                 mToDoViewModel.deleteItem(args.currentItem)
                 // Hide keyboard, show Snackbar, navigate back
                 hideKeyboard()
-                mSharedViewModel.showSnackbarAndDismiss(
-                    "Deleted: ${args.currentItem.title}",
-                    binding.root
-                )
+                showSnackbarAndDismiss("Deleted: ${args.currentItem.title}")
                 findNavController().navigate(R.id.action_updateFragment_to_listFragment)
             }
             .setNegativeButton("No", null)

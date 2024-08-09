@@ -21,6 +21,7 @@ import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentAddBinding
 import com.johnreg.to_doapp.ui.sharedviewmodel.SharedViewModel
 import com.johnreg.to_doapp.utils.hideKeyboard
+import com.johnreg.to_doapp.utils.showSnackbarAndDismiss
 import com.johnreg.to_doapp.utils.showSnackbarPleaseAddATitle
 
 class AddFragment : Fragment() {
@@ -88,10 +89,7 @@ class AddFragment : Fragment() {
             .setNegativeButton("Don't Save") { _, _ ->
                 // Hide keyboard, show Snackbar, navigate back
                 hideKeyboard()
-                mSharedViewModel.showSnackbarAndDismiss(
-                    "Changes not saved.",
-                    binding.root
-                )
+                showSnackbarAndDismiss("Changes not saved.")
                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
             }
             .setNeutralButton("Cancel", null)
@@ -111,7 +109,7 @@ class AddFragment : Fragment() {
             mToDoViewModel.createItem(newItem)
             // Hide keyboard, show Snackbar, navigate back
             hideKeyboard()
-            mSharedViewModel.showSnackbarAndDismiss("Added: ${binding.etTitle.text}", binding.root)
+            showSnackbarAndDismiss("Added: ${binding.etTitle.text}")
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
         }
     }
