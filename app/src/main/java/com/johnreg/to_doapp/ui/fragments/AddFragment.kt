@@ -21,7 +21,7 @@ import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentAddBinding
 import com.johnreg.to_doapp.ui.sharedviewmodel.SharedViewModel
-import com.johnreg.to_doapp.utils.hideKeyboardFrom
+import com.johnreg.to_doapp.utils.hideKeyboard
 
 class AddFragment : Fragment() {
 
@@ -61,7 +61,7 @@ class AddFragment : Fragment() {
                             showDialogAndSaveChanges()
                             true
                         } else {
-                            hideKeyboardFrom(requireContext(), binding.root)
+                            hideKeyboard()
                             false
                         }
                     }
@@ -84,7 +84,7 @@ class AddFragment : Fragment() {
             }
             .setNegativeButton("Don't Save") { _, _ ->
                 // Hide keyboard, show Snackbar, navigate back
-                hideKeyboardFrom(requireContext(), binding.root)
+                hideKeyboard()
                 mSharedViewModel.showSnackbarAndDismiss(
                     "Changes not saved.",
                     binding.root
@@ -97,7 +97,7 @@ class AddFragment : Fragment() {
 
     private fun createNewItem() = when {
         binding.etTitle.text.isEmpty() -> {
-            hideKeyboardFrom(requireContext(), binding.root)
+            hideKeyboard()
             Snackbar.make(binding.root, "Please add a title.", Snackbar.LENGTH_SHORT).show()
         }
         else -> {
@@ -108,7 +108,7 @@ class AddFragment : Fragment() {
             )
             mToDoViewModel.createItem(newItem)
             // Hide keyboard, show Snackbar, navigate back
-            hideKeyboardFrom(requireContext(), binding.root)
+            hideKeyboard()
             mSharedViewModel.showSnackbarAndDismiss("Added: ${binding.etTitle.text}", binding.root)
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
         }

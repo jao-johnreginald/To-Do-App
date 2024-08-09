@@ -22,7 +22,7 @@ import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentUpdateBinding
 import com.johnreg.to_doapp.ui.sharedviewmodel.SharedViewModel
-import com.johnreg.to_doapp.utils.hideKeyboardFrom
+import com.johnreg.to_doapp.utils.hideKeyboard
 
 class UpdateFragment : Fragment() {
 
@@ -64,7 +64,7 @@ class UpdateFragment : Fragment() {
                             showDialogAndSaveChanges()
                             true
                         } else {
-                            hideKeyboardFrom(requireContext(), binding.root)
+                            hideKeyboard()
                             false
                         }
                     }
@@ -91,7 +91,7 @@ class UpdateFragment : Fragment() {
             }
             .setNegativeButton("Don't Save") { _, _ ->
                 // Hide keyboard, show Snackbar, navigate back
-                hideKeyboardFrom(requireContext(), binding.root)
+                hideKeyboard()
                 mSharedViewModel.showSnackbarAndDismiss(
                     "Changes not saved.",
                     binding.root
@@ -104,7 +104,7 @@ class UpdateFragment : Fragment() {
 
     private fun updateItem() = when {
         binding.etTitle.text.isEmpty() -> {
-            hideKeyboardFrom(requireContext(), binding.root)
+            hideKeyboard()
             Snackbar.make(binding.root, "Please add a title.", Snackbar.LENGTH_SHORT).show()
         }
         else -> {
@@ -116,7 +116,7 @@ class UpdateFragment : Fragment() {
             )
             mToDoViewModel.updateItem(updatedItem)
             // Hide keyboard, show Snackbar, navigate back
-            hideKeyboardFrom(requireContext(), binding.root)
+            hideKeyboard()
             mSharedViewModel.showSnackbarAndDismiss("Updated: ${updatedItem.title}", binding.root)
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
@@ -129,7 +129,7 @@ class UpdateFragment : Fragment() {
             .setPositiveButton("Yes") { _, _ ->
                 mToDoViewModel.deleteItem(args.currentItem)
                 // Hide keyboard, show Snackbar, navigate back
-                hideKeyboardFrom(requireContext(), binding.root)
+                hideKeyboard()
                 mSharedViewModel.showSnackbarAndDismiss(
                     "Deleted: ${args.currentItem.title}",
                     binding.root

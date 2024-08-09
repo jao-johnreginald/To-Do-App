@@ -25,7 +25,7 @@ import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentListBinding
 import com.johnreg.to_doapp.ui.adapter.ListAdapter
 import com.johnreg.to_doapp.ui.sharedviewmodel.SharedViewModel
-import com.johnreg.to_doapp.utils.hideKeyboardFrom
+import com.johnreg.to_doapp.utils.hideKeyboard
 import com.johnreg.to_doapp.utils.observeOnceOnly
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
@@ -117,7 +117,7 @@ class ListFragment : Fragment() {
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 // Hide keyboard
-                hideKeyboardFrom(requireContext(), binding.root)
+                hideKeyboard()
                 return true
             }
             override fun onQueryTextChange(query: String?): Boolean {
