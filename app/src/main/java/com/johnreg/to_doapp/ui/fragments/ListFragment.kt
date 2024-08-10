@@ -95,7 +95,7 @@ class ListFragment : Fragment() {
                         mToDoViewModel.sortByHighPriority.observeOnceOnly(
                             viewLifecycleOwner
                         ) { sortByHighPriority ->
-                            listAdapter.setData(sortByHighPriority)
+                            listAdapter.setDataList(sortByHighPriority)
                         }
                         true
                     }
@@ -105,7 +105,7 @@ class ListFragment : Fragment() {
                         mToDoViewModel.sortByLowPriority.observeOnceOnly(
                             viewLifecycleOwner
                         ) { sortByLowPriority ->
-                            listAdapter.setData(sortByLowPriority)
+                            listAdapter.setDataList(sortByLowPriority)
                         }
                         true
                     }
@@ -141,7 +141,7 @@ class ListFragment : Fragment() {
         mToDoViewModel.getSearchedItems(searchQuery).observeOnceOnly(
             viewLifecycleOwner
         ) { searchedItems ->
-            listAdapter.setData(searchedItems)
+            listAdapter.setDataList(searchedItems)
         }
     }
 
@@ -202,7 +202,7 @@ class ListFragment : Fragment() {
             // Swipe to delete
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 // Store the item being swiped inside deletedItem and delete that item
-                val deletedItem = listAdapter.getCurrentItem(viewHolder.adapterPosition)
+                val deletedItem = listAdapter.getItemAt(viewHolder.adapterPosition)
                 mToDoViewModel.deleteItem(deletedItem)
                 // Restore deleted item
                 showSnackbarAndRestoreItem(deletedItem)
@@ -222,7 +222,7 @@ class ListFragment : Fragment() {
         // Observe this getAllItems LiveData, everytime it changes, get the newDataList
         // Set the listAdapter data and the isDataEmpty MutableLiveData
         mToDoViewModel.getAllItems.observe(viewLifecycleOwner) { newDataList ->
-            listAdapter.setData(newDataList)
+            listAdapter.setDataList(newDataList)
             mSharedViewModel.setMutableLiveData(newDataList)
         }
         // Observe this MutableLiveData object and whenever its value changes run an if check

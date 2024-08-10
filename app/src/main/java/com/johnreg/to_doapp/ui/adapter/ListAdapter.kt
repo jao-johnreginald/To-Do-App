@@ -56,13 +56,13 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
         }
     }
 
-    fun setData(newDataList: List<ToDoData>) {
+    fun setDataList(newDataList: List<ToDoData>) {
         val toDoDiffUtil = ToDoDiffUtil(dataList, newDataList)
         val toDoDiffResult = DiffUtil.calculateDiff(toDoDiffUtil)
         this.dataList = newDataList
         toDoDiffResult.dispatchUpdatesTo(this)
     }
 
-    fun getCurrentItem(position: Int): ToDoData = dataList[position]
+    fun getItemAt(position: Int): ToDoData = dataList[position]
 
 }
