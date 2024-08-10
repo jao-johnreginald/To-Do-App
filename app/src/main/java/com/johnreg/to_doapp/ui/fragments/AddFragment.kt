@@ -109,7 +109,7 @@ class AddFragment : Fragment() {
             mToDoViewModel.createItem(newItem)
             // Hide keyboard, show Snackbar, navigate back
             hideKeyboard()
-            showSnackbarAndDismiss("Added: ${binding.etTitle.text}")
+            showSnackbarAndDismiss("Added: ${newItem.title}")
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
         }
     }
