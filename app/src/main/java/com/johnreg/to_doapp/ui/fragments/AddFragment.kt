@@ -81,18 +81,18 @@ class AddFragment : Fragment() {
 
     private fun showDialogAndSaveChanges() {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Save Changes")
-            .setMessage("Do you want to save your changes?")
-            .setPositiveButton("Save") { _, _ ->
+            .setTitle(getString(R.string.save_changes_title))
+            .setMessage(getString(R.string.save_changes_message))
+            .setPositiveButton(getString(R.string.save)) { _, _ ->
                 createNewItem()
             }
-            .setNegativeButton("Don't Save") { _, _ ->
+            .setNegativeButton(getString(R.string.do_not_save)) { _, _ ->
                 // Hide keyboard, show Snackbar, navigate back
                 hideKeyboard()
-                showSnackbarAndDismiss("Changes not saved.")
+                showSnackbarAndDismiss(getString(R.string.changes_not_saved))
                 findNavController().navigate(R.id.action_addFragment_to_listFragment)
             }
-            .setNeutralButton("Cancel", null)
+            .setNeutralButton(getString(R.string.cancel), null)
             .show()
     }
 

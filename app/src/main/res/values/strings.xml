@@ -16,6 +16,18 @@
     <string name="no_data_image">no data image</string>
     <string name="add_icon">add icon</string>
 
+    <string name="save_changes_title">Save Changes</string>
+    <string name="save_changes_message">Do you want to save your changes?</string>
+    <string name="do_not_save">Don\'t Save</string>
+    <string name="changes_not_saved">Changes not saved.</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="delete_everything_title">Delete Everything?</string>
+    <string name="delete_everything_message">Are you sure you want to delete everything?</string>
+    <string name="successfully_removed_everything">Successfully Removed Everything!</string>
+    <string name="undo">Undo</string>
+
     <string-array name="priorities">
         <item>High Priority</item>
         <item>Medium Priority</item>
