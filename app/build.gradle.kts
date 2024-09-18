@@ -56,7 +56,9 @@ dependencies {
 
     // Navigation component
     val navVersion = "2.7.7"
+    //noinspection GradleDependency
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
+    //noinspection GradleDependency
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
     // ROOM components | KSP | Coroutines
@@ -67,7 +69,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
 
     // Convert Flow to LiveData with .asLiveData()
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.5")
 
     // RecyclerView Animator
     implementation("jp.wasabeef:recyclerview-animators:4.0.2")
