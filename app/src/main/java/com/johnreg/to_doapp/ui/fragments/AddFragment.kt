@@ -19,6 +19,7 @@ import com.johnreg.to_doapp.R
 import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentAddBinding
+import com.johnreg.to_doapp.ui.adapter.SpinnerAdapter
 import com.johnreg.to_doapp.ui.sharedviewmodel.SharedViewModel
 import com.johnreg.to_doapp.utils.hideKeyboard
 import com.johnreg.to_doapp.utils.showSnackbar
@@ -106,6 +107,7 @@ class AddFragment : Fragment() {
                 description = binding.etDescription.text.toString(),
                 priority = mSharedViewModel.parseStringToPriority(binding.spinner.selectedItem.toString())
             )
+
             mToDoViewModel.createItem(newItem)
             // Hide keyboard, show Snackbar, navigate back
             hideKeyboard()
@@ -116,7 +118,9 @@ class AddFragment : Fragment() {
 
     private fun setUI() {
         // Set the Spinner color
-        binding.spinner.onItemSelectedListener = mSharedViewModel.spinnerListener
+        val priorities = resources.getStringArray(R.array.priorities).toList()
+        binding.spinner.adapter = SpinnerAdapter(requireContext(), priorities)
+
         // Intercept the back button
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             if (hasChanges()) {
