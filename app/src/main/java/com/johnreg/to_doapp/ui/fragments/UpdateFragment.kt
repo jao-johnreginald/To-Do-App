@@ -62,7 +62,7 @@ class UpdateFragment : Fragment() {
                 // Handle the menu selection
                 return when (menuItem.itemId) {
                     android.R.id.home -> {
-                        if (isNotItemEqualText()) {
+                        if (hasChanges()) {
                             showDialogAndSaveChanges()
                             true
                         } else {
@@ -147,7 +147,7 @@ class UpdateFragment : Fragment() {
         binding.spinner.onItemSelectedListener = mSharedViewModel.spinnerListener
         // Intercept the back button
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            if (isNotItemEqualText()) {
+            if (hasChanges()) {
                 showDialogAndSaveChanges()
             } else {
                 isEnabled = false
@@ -156,7 +156,7 @@ class UpdateFragment : Fragment() {
         }
     }
 
-    private fun isNotItemEqualText(): Boolean {
+    private fun hasChanges(): Boolean {
         return args.currentItem.title !=
                 binding.etTitle.text.toString()
                 ||

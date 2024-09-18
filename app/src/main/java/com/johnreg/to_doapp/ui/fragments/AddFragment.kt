@@ -59,7 +59,7 @@ class AddFragment : Fragment() {
                 // Handle the menu selection
                 return when (menuItem.itemId) {
                     android.R.id.home -> {
-                        if (isNotEmptyTexts()) {
+                        if (hasChanges()) {
                             showDialogAndSaveChanges()
                             true
                         } else {
@@ -119,7 +119,7 @@ class AddFragment : Fragment() {
         binding.spinner.onItemSelectedListener = mSharedViewModel.spinnerListener
         // Intercept the back button
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            if (isNotEmptyTexts()) {
+            if (hasChanges()) {
                 showDialogAndSaveChanges()
             } else {
                 isEnabled = false
@@ -128,7 +128,7 @@ class AddFragment : Fragment() {
         }
     }
 
-    private fun isNotEmptyTexts(): Boolean {
+    private fun hasChanges(): Boolean {
         return binding.etTitle.text.isNotEmpty() || binding.etDescription.text.isNotEmpty()
     }
 
