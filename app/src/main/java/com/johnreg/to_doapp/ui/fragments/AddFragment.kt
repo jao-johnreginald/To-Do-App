@@ -70,7 +70,7 @@ class AddFragment : Fragment() {
                     }
 
                     R.id.menu_add -> {
-                        createNewItem()
+                        createItem()
                         true
                     }
 
@@ -85,7 +85,7 @@ class AddFragment : Fragment() {
             .setTitle(getString(R.string.save_changes_title))
             .setMessage(getString(R.string.save_changes_message))
             .setPositiveButton(getString(R.string.save)) { _, _ ->
-                createNewItem()
+                createItem()
             }
             .setNegativeButton(getString(R.string.do_not_save)) { _, _ ->
                 // Hide keyboard, show Snackbar, navigate back
@@ -97,7 +97,7 @@ class AddFragment : Fragment() {
             .show()
     }
 
-    private fun createNewItem() {
+    private fun createItem() {
         if (binding.etTitle.text.isEmpty()) {
             hideKeyboard()
             showSnackbar(getString(R.string.please_add_a_title))
