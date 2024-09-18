@@ -16,10 +16,12 @@ local.properties
 
 *.aab
 *.apk
+*.log
 google-services.json
 .idea/compiler.xml
 .idea/deploymentTargetDropDown.xml
 .idea/deploymentTargetSelector.xml
 .idea/gradle.xml
 .idea/misc.xml
+.idea/other.xml
 .idea/vcs.xml
