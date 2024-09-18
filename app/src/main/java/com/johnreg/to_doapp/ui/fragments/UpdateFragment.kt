@@ -22,8 +22,8 @@ import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentUpdateBinding
 import com.johnreg.to_doapp.ui.sharedviewmodel.SharedViewModel
 import com.johnreg.to_doapp.utils.hideKeyboard
+import com.johnreg.to_doapp.utils.showSnackbar
 import com.johnreg.to_doapp.utils.showSnackbarAndDismiss
-import com.johnreg.to_doapp.utils.showSnackbarPleaseAddATitle
 
 class UpdateFragment : Fragment() {
 
@@ -107,7 +107,7 @@ class UpdateFragment : Fragment() {
     private fun updateItem() {
         if (binding.etTitle.text.isEmpty()) {
             hideKeyboard()
-            showSnackbarPleaseAddATitle()
+            showSnackbar(getString(R.string.please_add_a_title))
         } else {
             val updatedItem = ToDoData(
                 id = args.currentItem.id,

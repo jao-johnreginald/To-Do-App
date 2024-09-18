@@ -27,6 +27,7 @@
     <string name="delete_everything_message">Are you sure you want to delete everything?</string>
     <string name="successfully_removed_everything">Successfully Removed Everything!</string>
     <string name="undo">Undo</string>
+    <string name="please_add_a_title">Please add a title.</string>
 
     <string-array name="priorities">
         <item>High Priority</item>

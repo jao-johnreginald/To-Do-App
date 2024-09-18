@@ -24,8 +24,8 @@ fun Fragment.hideKeyboard() {
     imm.hideSoftInputFromWindow(requireView().windowToken, 0)
 }
 
-fun Fragment.showSnackbarPleaseAddATitle() {
-    Snackbar.make(requireView(), "Please add a title.", Snackbar.LENGTH_SHORT).show()
+fun Fragment.showSnackbar(text: String) {
+    Snackbar.make(requireView(), text, Snackbar.LENGTH_SHORT).show()
 }
 
 fun Fragment.showSnackbarAndDismiss(text: String) {
