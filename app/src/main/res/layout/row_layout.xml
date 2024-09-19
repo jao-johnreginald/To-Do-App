@@ -8,7 +8,6 @@
     android:layout_margin="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/row_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="16dp"
