@@ -41,7 +41,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
     fun getItemAt(position: Int): ToDoData = dataList[position]
 
-    class ListViewHolder(
+    inner class ListViewHolder(
         private val binding: RowLayoutBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(currentItem: ToDoData) {
