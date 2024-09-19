@@ -116,7 +116,7 @@ class AddFragment : Fragment() {
     }
 
     private fun setUI() {
-        // Set the Spinner color
+        // Set the spinner adapter
         val priorities = resources.getStringArray(R.array.priorities).toList()
         binding.spinner.adapter = SpinnerAdapter(requireContext(), priorities)
 
