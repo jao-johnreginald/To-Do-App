@@ -11,7 +11,7 @@ import com.johnreg.to_doapp.data.models.ToDoData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [ToDoData::class], version = 2, exportSchema = false)
+@Database(entities = [ToDoData::class], version = 1, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class ToDoDatabase : RoomDatabase() {
 
@@ -74,6 +74,7 @@ abstract class ToDoDatabase : RoomDatabase() {
 
         private fun getToDoList() = listOf(
             ToDoData(
+                id = 1,
                 title = "Homework",
                 priority = Priority.HIGH,
                 description = """
@@ -86,6 +87,7 @@ abstract class ToDoDatabase : RoomDatabase() {
                             """.trimIndent()
             ),
             ToDoData(
+                id = 2,
                 title = "Grocery Shop",
                 priority = Priority.MEDIUM,
                 description = """
@@ -101,21 +103,25 @@ abstract class ToDoDatabase : RoomDatabase() {
                             """.trimIndent()
             ),
             ToDoData(
+                id = 3,
                 title = "House work",
                 priority = Priority.LOW,
                 description = "Moving the furniture with my brother."
             ),
             ToDoData(
+                id = 4,
                 title = "Room cleaning",
                 priority = Priority.MEDIUM,
                 description = "Clean my room, and wash the carpet"
             ),
             ToDoData(
+                id = 5,
                 title = "Birthday Gift",
                 priority = Priority.HIGH,
                 description = "Buy a gift for my girlfriend"
             ),
             ToDoData(
+                id = 6,
                 title = "Feed the dogs",
                 priority = Priority.MEDIUM,
                 description = """
@@ -126,11 +132,13 @@ abstract class ToDoDatabase : RoomDatabase() {
                             """.trimIndent()
             ),
             ToDoData(
+                id = 7,
                 title = "Dishes",
                 priority = Priority.HIGH,
                 description = "Wash the dishes before she comes back!"
             ),
             ToDoData(
+                id = 8,
                 title = "Study",
                 priority = Priority.MEDIUM,
                 description = """
@@ -141,6 +149,7 @@ abstract class ToDoDatabase : RoomDatabase() {
                             """.trimIndent()
             ),
             ToDoData(
+                id = 9,
                 title = "Gym",
                 priority = Priority.LOW,
                 description = """
@@ -149,30 +158,35 @@ abstract class ToDoDatabase : RoomDatabase() {
                             """.trimIndent()
             ),
             ToDoData(
+                id = 10,
                 title = "Football",
                 priority = Priority.MEDIUM,
                 description = "Play football with friends."
             ),
             ToDoData(
+                id = 11,
                 title = "Bicycle",
                 priority = Priority.LOW,
                 description = "Buy one!"
             ),
             ToDoData(
+                id = 12,
                 title = "Visit grandma",
                 priority = Priority.HIGH,
                 description = "Don't forget this one!"
             ),
             ToDoData(
+                id = 13,
                 title = "Vacation",
                 priority = Priority.HIGH,
                 description = "Vacation with my family"
             ),
             ToDoData(
+                id = 14,
                 title = "Wash the car",
                 priority = Priority.LOW,
                 description = "Wash and clean the car"
-            ),
+            )
         )
     }
 

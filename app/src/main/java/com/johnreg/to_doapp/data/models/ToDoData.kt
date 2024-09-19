@@ -10,6 +10,6 @@ import kotlinx.parcelize.Parcelize
 data class ToDoData(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
-    val priority: Priority = Priority.HIGH,
-    val description: String? = null
+    val priority: Priority,
+    val description: String
 ) : Parcelable
