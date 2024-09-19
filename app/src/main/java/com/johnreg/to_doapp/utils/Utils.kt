@@ -41,7 +41,7 @@ fun getPriorityFrom(string: String): Priority = when (string) {
     else -> Priority.HIGH
 }
 
-fun getSelectionFrom(priority: Priority): Int = when (priority) {
+fun getPositionFrom(priority: Priority): Int = when (priority) {
     Priority.HIGH -> 0
     Priority.MEDIUM -> 1
     Priority.LOW -> 2

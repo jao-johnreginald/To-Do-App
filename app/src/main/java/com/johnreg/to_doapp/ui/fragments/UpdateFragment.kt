@@ -21,8 +21,8 @@ import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentUpdateBinding
 import com.johnreg.to_doapp.ui.adapter.SpinnerAdapter
+import com.johnreg.to_doapp.utils.getPositionFrom
 import com.johnreg.to_doapp.utils.getPriorityFrom
-import com.johnreg.to_doapp.utils.getSelectionFrom
 import com.johnreg.to_doapp.utils.hideKeyboard
 import com.johnreg.to_doapp.utils.showSnackbar
 import com.johnreg.to_doapp.utils.showSnackbarAndDismiss
@@ -148,7 +148,7 @@ class UpdateFragment : Fragment() {
         // Set the spinner adapter and selection
         val priorities = resources.getStringArray(R.array.priorities).toList()
         binding.spinner.adapter = SpinnerAdapter(requireContext(), priorities)
-        binding.spinner.setSelection(getSelectionFrom(args.currentItem.priority))
+        binding.spinner.setSelection(getPositionFrom(args.currentItem.priority))
 
         // Intercept the back button
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
