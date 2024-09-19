@@ -51,14 +51,14 @@ abstract class ToDoDatabase : RoomDatabase() {
                     context.applicationContext,
                     ToDoDatabase::class.java,
                     "todo_database"
-                ).addCallback(TodoDatabaseCallback(scope)).build()
+                ).addCallback(ToDoCallback(scope)).build()
                 INSTANCE = instance
                 instance
             }
         }
     }
 
-    private class TodoDatabaseCallback(private val scope: CoroutineScope) : Callback() {
+    private class ToDoCallback(private val scope: CoroutineScope) : Callback() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
             // Check if INSTANCE is not null, add data to database
@@ -66,13 +66,13 @@ abstract class ToDoDatabase : RoomDatabase() {
                 // Can't use main thread for database operations, must use CoroutineScope
                 scope.launch {
                     val toDoDao = toDoDatabase.getToDoDao()
-                    val toDoList = getToDoList()
-                    for (i in toDoList.indices) toDoDao.createItem(toDoList[i])
+                    val defaultEntries = getDefaultEntries()
+                    for (i in defaultEntries.indices) toDoDao.createItem(defaultEntries[i])
                 }
             }
         }
 
-        private fun getToDoList() = listOf(
+        private fun getDefaultEntries() = listOf(
             ToDoData(
                 id = 1,
                 title = "Homework",
