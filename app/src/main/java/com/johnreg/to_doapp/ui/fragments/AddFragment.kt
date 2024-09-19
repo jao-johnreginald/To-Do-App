@@ -20,7 +20,7 @@ import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentAddBinding
 import com.johnreg.to_doapp.ui.adapter.SpinnerAdapter
-import com.johnreg.to_doapp.ui.sharedviewmodel.SharedViewModel
+import com.johnreg.to_doapp.utils.getPriorityFrom
 import com.johnreg.to_doapp.utils.hideKeyboard
 import com.johnreg.to_doapp.utils.showSnackbar
 import com.johnreg.to_doapp.utils.showSnackbarAndDismiss
@@ -30,7 +30,6 @@ class AddFragment : Fragment() {
     private lateinit var binding: FragmentAddBinding
 
     private val mToDoViewModel: ToDoViewModel by viewModels()
-    private val mSharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -105,7 +104,7 @@ class AddFragment : Fragment() {
             val newItem = ToDoData(
                 title = binding.etTitle.text.toString(),
                 description = binding.etDescription.text.toString(),
-                priority = mSharedViewModel.parseStringToPriority(binding.spinner.selectedItem.toString())
+                priority = getPriorityFrom(binding.spinner.selectedItem.toString())
             )
 
             mToDoViewModel.createItem(newItem)

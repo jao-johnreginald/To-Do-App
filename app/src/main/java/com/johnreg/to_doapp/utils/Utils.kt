@@ -7,6 +7,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
+import com.johnreg.to_doapp.data.models.Priority
 
 // This function will update our LiveData object only once and after that it will remove its observer
 fun <T> LiveData<T>.observeOnceOnly(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
@@ -32,4 +33,16 @@ fun Fragment.showSnackbarAndDismiss(text: String) {
     val snackbar = Snackbar.make(requireView(), text, Snackbar.LENGTH_LONG)
     snackbar.setAction("Dismiss") { snackbar.dismiss() }
     snackbar.show()
+}
+
+fun getPriorityFrom(string: String): Priority = when (string) {
+    "Medium Priority" -> Priority.MEDIUM
+    "Low Priority" -> Priority.LOW
+    else -> Priority.HIGH
+}
+
+fun getSelectionFrom(priority: Priority): Int = when (priority) {
+    Priority.HIGH -> 0
+    Priority.MEDIUM -> 1
+    Priority.LOW -> 2
 }
