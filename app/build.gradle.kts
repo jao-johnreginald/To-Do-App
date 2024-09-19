@@ -69,7 +69,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
 
     // Convert Flow to LiveData with .asLiveData()
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.5")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.6")
 
     // RecyclerView Animator
     implementation("jp.wasabeef:recyclerview-animators:4.0.2")
