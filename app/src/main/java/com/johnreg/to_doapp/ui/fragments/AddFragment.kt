@@ -117,8 +117,9 @@ class AddFragment : Fragment() {
 
     private fun setUI() {
         // Set the spinner adapter
-        val priorities = resources.getStringArray(R.array.priorities).toList()
-        binding.spinner.adapter = SpinnerAdapter(requireContext(), priorities)
+        binding.spinner.adapter = SpinnerAdapter(
+            requireContext(), resources.getStringArray(R.array.priorities)
+        )
 
         // Intercept the back button
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {

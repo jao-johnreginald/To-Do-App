@@ -9,8 +9,8 @@ import androidx.core.content.ContextCompat.getColor
 import com.johnreg.to_doapp.R
 
 class SpinnerAdapter(
-    context: Context, items: List<String>
-) : ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items) {
+    context: Context, stringArray: Array<String>
+) : ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, stringArray) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val textOfSpinner = super.getView(position, convertView, parent) as TextView

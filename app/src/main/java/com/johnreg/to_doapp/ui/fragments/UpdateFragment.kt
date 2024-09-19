@@ -146,8 +146,10 @@ class UpdateFragment : Fragment() {
         binding.etDescription.setText(args.currentItem.description)
 
         // Set the spinner adapter and selection
-        val priorities = resources.getStringArray(R.array.priorities).toList()
-        binding.spinner.adapter = SpinnerAdapter(requireContext(), priorities)
+        binding.spinner.adapter = SpinnerAdapter(
+            requireContext(), resources.getStringArray(R.array.priorities)
+        )
+
         binding.spinner.setSelection(getPositionFrom(args.currentItem.priority))
 
         // Intercept the back button
