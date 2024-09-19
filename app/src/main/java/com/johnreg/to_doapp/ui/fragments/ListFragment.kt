@@ -225,7 +225,7 @@ class ListFragment : Fragment() {
         // Set the listAdapter dataList and the isDataEmpty MutableLiveData
         mToDoViewModel.getAllItems.observe(viewLifecycleOwner) { newDataList ->
             listAdapter.setDataList(newDataList)
-            mSharedViewModel.setMutableLiveData(newDataList)
+            mSharedViewModel.setDatabaseEmpty(newDataList)
         }
 
         // Observe this MutableLiveData object and whenever its value changes run an if check
