@@ -61,7 +61,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
             binding.priorityIndicator.setCardBackgroundColor(color)
             binding.tvTitle.text = currentItem.title
 
-            if (currentItem.description.isNullOrEmpty()) {
+            if (currentItem.description.isEmpty()) {
                 binding.tvDescription.visibility = View.GONE
             } else {
                 binding.tvDescription.visibility = View.VISIBLE
