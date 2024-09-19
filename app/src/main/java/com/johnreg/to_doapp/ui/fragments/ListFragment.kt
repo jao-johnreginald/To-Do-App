@@ -77,6 +77,7 @@ class ListFragment : Fragment() {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
                 // Add menu items here
                 menuInflater.inflate(R.menu.list_fragment_menu, menu)
+
                 // Set the SearchView and Listener
                 setSearchViewAndListener(menu)
             }
@@ -136,7 +137,8 @@ class ListFragment : Fragment() {
     private fun searchThroughDatabase(query: String) {
         // Finds any values that have "query" in any position whether start, end, first, second, etc.
         val searchQuery = "%$query%"
-        // Inside the searchDatabase Query pass this searchQuery and observe this LiveData
+
+        // Inside getSearchedItems pass this searchQuery and observe this LiveData
         // Whenever the data changes or we type something, the observer and adapter will be notified
         mToDoViewModel.getSearchedItems(searchQuery).observeOnceOnly(
             viewLifecycleOwner
@@ -155,6 +157,7 @@ class ListFragment : Fragment() {
                     // Restore deleted dataList
                     showSnackbarAndRestoreAllItems(deletedItems)
                 }
+
                 mToDoViewModel.deleteAllItems()
             }
             .setNegativeButton(getString(R.string.no), null)
@@ -162,13 +165,11 @@ class ListFragment : Fragment() {
     }
 
     private fun showSnackbarAndRestoreAllItems(deletedItems: List<ToDoData>) {
-        val snackbar = Snackbar.make(
+        Snackbar.make(
             binding.root, getString(R.string.successfully_removed_everything), Snackbar.LENGTH_LONG
-        )
-        snackbar.setAction(getString(R.string.undo)) {
+        ).setAction(getString(R.string.undo)) {
             for (i in deletedItems.indices) mToDoViewModel.createItem(deletedItems[i])
-        }
-        snackbar.show()
+        }.show()
     }
 
     private fun setFabAndRecyclerView() {
@@ -176,6 +177,7 @@ class ListFragment : Fragment() {
             // Use nav controllers to navigate to add fragment
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
+
         binding.recyclerView.apply {
             // Adapter
             adapter = listAdapter
@@ -187,10 +189,9 @@ class ListFragment : Fragment() {
     }
 
     private fun setSwipeToDelete() {
-        // 0 because we're not going to drag, only swipe. LEFT because we're going to swipe left
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-            0,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+            // 0 - we're not going to drag, only swipe | LEFT or RIGHT - direction to swipe
+            0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
         ) {
             // Return false because we're not going to move our items
             override fun onMove(
@@ -204,6 +205,7 @@ class ListFragment : Fragment() {
                 // Store the item being swiped inside deletedItem and delete that item
                 val deletedItem = listAdapter.getItemAt(viewHolder.adapterPosition)
                 mToDoViewModel.deleteItem(deletedItem)
+
                 // Restore deleted item
                 showSnackbarAndRestoreItem(deletedItem)
             }
@@ -211,20 +213,21 @@ class ListFragment : Fragment() {
     }
 
     private fun showSnackbarAndRestoreItem(deletedItem: ToDoData) {
-        val snackbar = Snackbar.make(
+        Snackbar.make(
             binding.root, "Deleted: ${deletedItem.title}", Snackbar.LENGTH_LONG
-        )
-        snackbar.setAction(getString(R.string.undo)) { mToDoViewModel.createItem(deletedItem) }
-        snackbar.show()
+        ).setAction(getString(R.string.undo)) {
+            mToDoViewModel.createItem(deletedItem)
+        }.show()
     }
 
     private fun observeAllData() {
         // Observe this getAllItems LiveData, everytime it changes, get the newDataList
-        // Set the listAdapter data and the isDataEmpty MutableLiveData
+        // Set the listAdapter dataList and the isDataEmpty MutableLiveData
         mToDoViewModel.getAllItems.observe(viewLifecycleOwner) { newDataList ->
             listAdapter.setDataList(newDataList)
             mSharedViewModel.setMutableLiveData(newDataList)
         }
+
         // Observe this MutableLiveData object and whenever its value changes run an if check
         // If the boolean is true then show the Views, if false then hide the Views
         mSharedViewModel.isDatabaseEmpty.observe(viewLifecycleOwner) { isDatabaseEmpty ->
