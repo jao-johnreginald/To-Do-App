@@ -19,7 +19,7 @@ import com.johnreg.to_doapp.R
 import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentAddBinding
-import com.johnreg.to_doapp.ui.adapter.SpinnerAdapter
+import com.johnreg.to_doapp.ui.adapters.SpinnerAdapter
 import com.johnreg.to_doapp.utils.getPriorityFrom
 import com.johnreg.to_doapp.utils.hideKeyboard
 import com.johnreg.to_doapp.utils.showSnackbar

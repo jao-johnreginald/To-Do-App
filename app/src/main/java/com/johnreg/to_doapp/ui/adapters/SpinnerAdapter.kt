@@ -1,4 +1,4 @@
-package com.johnreg.to_doapp.ui.adapter
+package com.johnreg.to_doapp.ui.adapters
 
 import android.content.Context
 import android.view.View

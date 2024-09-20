@@ -1,4 +1,4 @@
-package com.johnreg.to_doapp.ui.adapter
+package com.johnreg.to_doapp.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.View

@@ -1,4 +1,4 @@
-package com.johnreg.to_doapp.ui.adapter
+package com.johnreg.to_doapp.ui.adapters
 
 import androidx.recyclerview.widget.DiffUtil
 import com.johnreg.to_doapp.data.models.ToDoData

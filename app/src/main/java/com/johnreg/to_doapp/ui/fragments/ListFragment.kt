@@ -23,7 +23,7 @@ import com.johnreg.to_doapp.R
 import com.johnreg.to_doapp.data.models.ToDoData
 import com.johnreg.to_doapp.data.viewmodel.ToDoViewModel
 import com.johnreg.to_doapp.databinding.FragmentListBinding
-import com.johnreg.to_doapp.ui.adapter.ListAdapter
+import com.johnreg.to_doapp.ui.adapters.ListAdapter
 import com.johnreg.to_doapp.ui.sharedviewmodel.SharedViewModel
 import com.johnreg.to_doapp.utils.hideKeyboard
 import com.johnreg.to_doapp.utils.observeOnceOnly
