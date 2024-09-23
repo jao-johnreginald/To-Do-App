@@ -146,11 +146,10 @@ class UpdateFragment : Fragment() {
         binding.etDescription.setText(args.currentItem.description)
 
         // Set the spinner adapter and selection
-        binding.spinner.adapter = SpinnerAdapter(
-            requireContext(), resources.getStringArray(R.array.priorities)
-        )
-
-        binding.spinner.setSelection(getPositionFrom(args.currentItem.priority))
+        binding.spinner.apply {
+            adapter = SpinnerAdapter(requireContext(), resources.getStringArray(R.array.priorities))
+            setSelection(getPositionFrom(args.currentItem.priority))
+        }
 
         // Intercept the back button
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
