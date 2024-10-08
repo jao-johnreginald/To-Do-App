@@ -27,9 +27,9 @@ class ToDoViewModel(application: Application) : AndroidViewModel(application) {
     val sortByHighPriority: LiveData<List<ToDoData>> = repository.sortByHighPriority.asLiveData()
     val sortByLowPriority: LiveData<List<ToDoData>> = repository.sortByLowPriority.asLiveData()
 
-    fun getSearchedItems(searchQuery: String): LiveData<List<ToDoData>> {
-        return repository.getSearchedItems(searchQuery).asLiveData()
-    }
+    fun getSearchedItems(
+        searchQuery: String
+    ): LiveData<List<ToDoData>> = repository.getSearchedItems(searchQuery).asLiveData()
 
     // Run function from a background thread, Dispatchers.IO is generally used for database operations
     fun createItem(toDoData: ToDoData) = viewModelScope.launch(Dispatchers.IO) {

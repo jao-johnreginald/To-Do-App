@@ -12,9 +12,9 @@ class ToDoRepository(private val toDoDao: ToDoDao) {
     val sortByHighPriority: Flow<List<ToDoData>> = toDoDao.sortByHighPriority()
     val sortByLowPriority: Flow<List<ToDoData>> = toDoDao.sortByLowPriority()
 
-    fun getSearchedItems(searchQuery: String): Flow<List<ToDoData>> {
-        return toDoDao.getSearchedItems(searchQuery)
-    }
+    fun getSearchedItems(
+        searchQuery: String
+    ): Flow<List<ToDoData>> = toDoDao.getSearchedItems(searchQuery)
 
     // @WorkerThread allows the operations to be done in a single thread
     @WorkerThread
