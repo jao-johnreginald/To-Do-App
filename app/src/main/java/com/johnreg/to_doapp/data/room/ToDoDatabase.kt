@@ -62,10 +62,10 @@ abstract class ToDoDatabase : RoomDatabase() {
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
             // Check if INSTANCE is not null, add data to database
-            INSTANCE?.let { toDoDatabase ->
+            INSTANCE?.let { database ->
                 // Can't use main thread for database operations, must use CoroutineScope
                 scope.launch {
-                    val toDoDao = toDoDatabase.getToDoDao()
+                    val toDoDao = database.getToDoDao()
                     val defaultEntries = getDefaultEntries()
                     for (i in defaultEntries.indices) toDoDao.createItem(defaultEntries[i])
                 }
